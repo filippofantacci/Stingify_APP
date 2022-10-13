@@ -1,4 +1,4 @@
 # Stingify_APP
 
-npm i;
-npm run start;
+- npm i;
+- npm run start;
