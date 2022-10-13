@@ -1,0 +1,7 @@
+{
+  "name": "stingify-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
