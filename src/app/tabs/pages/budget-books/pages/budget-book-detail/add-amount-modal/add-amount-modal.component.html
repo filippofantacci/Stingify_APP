@@ -1,0 +1,100 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Add Amount</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close(false)" color="primary">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen *ngIf="ready">
+  <!-- form modifica utente -->
+  <form [formGroup]="formAddAmount" (ngSubmit)="onSubmit()">
+
+    <ion-list>
+      <!-- amountType -->
+      <ion-item>
+        <ion-label>AmountType: </ion-label>
+        <ion-select formControlName="amountType" (ionChange)="amountTypeChange()" interface="popover">
+          <ion-select-option *ngFor="let amountType of amountTypes" [value]="amountType.amountTypeId">
+            {{amountType.description}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <!-- description -->
+      <ion-item>
+        <ion-label>Description: </ion-label>
+        <ion-input formControlName="description" class="ion-text-right"></ion-input>
+      </ion-item>
+      <!-- category -->
+      <ion-item>
+        <ion-label>Category: </ion-label>
+        <ion-select [formControl]="macroCategeoryFormControl" (ionChange)="macroCategoryChange()" interface="popover" placeholder="Select">
+          <ion-select-option *ngFor="let macroCategory of macroCategoriesOptions" [value]="macroCategory">
+            {{macroCategory.description}}
+          </ion-select-option>
+        </ion-select>
+        <ion-select formControlName="category" interface="popover" placeholder="Select">
+          <ion-select-option *ngFor="let category of categories" [value]="category.categoryId">
+            {{category.description}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- date -->
+      <ion-item id="open-datetime-modal">
+        <ion-label>Date: </ion-label>
+        <ion-text slot="end">{{ date | date: 'dd/MM/yyyy' }}</ion-text>
+      </ion-item>
+
+      <ion-modal class="datetime-modal" trigger="open-datetime-modal">
+        <ng-template>
+          <ion-content>
+            <ion-datetime 
+            formControlName="date" first-day-of-week="1" display-format="DD/MM/YYYY" picker-format="MMMM/DD/YYYY"
+            cancelText="Cancel" doneText="Done" showDefaultButtons="true" size="cover" presentation="date"
+            (ionChange)="dateChange()">
+          </ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
+      <!-- planned -->
+      <ion-item>
+        <ion-label>Planned:</ion-label>
+        <!-- <ion-text>
+          {{planned | currency:'EUR': 'symbol' }}        
+        </ion-text> -->
+        <ion-input formControlName="planned" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
+      </ion-item>
+      
+      <!-- actual -->
+      <ion-item>
+        <ion-label>Actual:</ion-label>
+        <ion-input formControlName="actual" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    </form>
+    
+  </ion-content>
+  <ion-footer>
+    <ion-grid>
+      <ion-row class="ion-justify-content-between">
+        
+        <ion-col>
+          <ion-button (click)="onSubmit()" [disabled]="!formAddAmount.valid" expand="block" color="primary">
+            <ion-icon slot="start" icon="save-outline" class="component-icon"></ion-icon>
+            Save
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="close(true)" expand="block" color="secondary" fill="outline">
+            <ion-icon slot="start" icon="arrow-undo-outline" class="component-icon"></ion-icon>
+            Cancel
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      
+    </ion-grid>
+  </ion-footer>

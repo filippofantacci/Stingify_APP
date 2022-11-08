@@ -1,13 +1,12 @@
-<ion-tabs>
+<ion-tabs *ngIf="ready">
 
   <ion-tab-bar slot="bottom">
-
 
     <ng-container *ngFor="let tab of appTabs">
 
       <ion-tab-button tab="{{tab.url}}">
         <ion-icon name="{{tab.icon}}"></ion-icon>
-        <ion-badge color="warning">dev</ion-badge>
+        <ion-badge color="warning" *ngIf="!tab.enabled">dev</ion-badge>
         <ion-label>{{tab.title}}</ion-label>
       </ion-tab-button>
 

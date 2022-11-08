@@ -1,0 +1,989 @@
+openapi: 3.0.1
+servers:
+- url: /app/stingify/api/v1
+  description: API of Stingify microservice
+paths:
+  /users:
+    get:
+      tags:
+      - user-controller
+      operationId: getAllUser
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+    put:
+      tags:
+      - user-controller
+      operationId: updateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+    post:
+      tags:
+      - user-controller
+      operationId: addUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+    delete:
+      tags:
+      - user-controller
+      operationId: deleteUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /macro-categories:
+    get:
+      tags:
+      - macro-category-controller
+      operationId: getAllMacroCategory
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MacroCategoryDTO'
+    put:
+      tags:
+      - macro-category-controller
+      operationId: updateMacroCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MacroCategoryDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MacroCategoryDTO'
+    post:
+      tags:
+      - macro-category-controller
+      operationId: addMacroCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MacroCategoryDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MacroCategoryDTO'
+    delete:
+      tags:
+      - macro-category-controller
+      operationId: deleteMacroCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MacroCategoryDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /categories:
+    get:
+      tags:
+      - category-controller
+      operationId: getAllCategory
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryDTO'
+    put:
+      tags:
+      - category-controller
+      operationId: updateCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDTO'
+    post:
+      tags:
+      - category-controller
+      operationId: addCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDTO'
+    delete:
+      tags:
+      - category-controller
+      operationId: deleteCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /budget-books:
+    get:
+      tags:
+      - budget-book-controller
+      operationId: getAllBudgetBook
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BudgetBookDTO'
+    put:
+      tags:
+      - budget-book-controller
+      operationId: updateBudgetBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BudgetBookDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetBookDTO'
+    post:
+      tags:
+      - budget-book-controller
+      operationId: addBudgetBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BudgetBookDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetBookDTO'
+    delete:
+      tags:
+      - budget-book-controller
+      operationId: deleteBudgetBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BudgetBookDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /amounts:
+    get:
+      tags:
+      - amounts-controller
+      operationId: getAllAmount
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AmountDTO'
+    put:
+      tags:
+      - amounts-controller
+      operationId: updateAmount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AmountDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmountDTO'
+    post:
+      tags:
+      - amounts-controller
+      operationId: addAmount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AmountDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmountDTO'
+    delete:
+      tags:
+      - amounts-controller
+      operationId: deleteAmount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AmountDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /amount-types:
+    get:
+      tags:
+      - amount-type-controller
+      operationId: getAllAmountType
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AmountTypeDTO'
+    put:
+      tags:
+      - amount-type-controller
+      operationId: updateAmountType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AmountTypeDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmountTypeDTO'
+    post:
+      tags:
+      - amount-type-controller
+      operationId: addAmountType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AmountTypeDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmountTypeDTO'
+    delete:
+      tags:
+      - amount-type-controller
+      operationId: deleteAmountType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AmountTypeDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /budget-books/user:
+    get:
+      tags:
+      - budget-book-controller
+      operationId: getAllUserBudgetBooksByUserId
+      parameters:
+      - name: page
+        in: query
+        description: Zero-based page index (0..N)
+        required: false
+        schema:
+          minimum: 0
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        description: The size of the page to be returned
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+          default: 20
+      - name: sort
+        in: query
+        description: "Sorting criteria in the format: property(,asc|desc). Default\
+          \ sort order is ascending. Multiple sort criteria are supported."
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: userId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageBudgetBookDTO'
+    post:
+      tags:
+      - budget-book-controller
+      operationId: addUserToBudgetBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserBudgetBooksDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetBookDTO'
+    delete:
+      tags:
+      - budget-book-controller
+      operationId: deleteUserToBudgetBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserBudgetBooksDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /budget-books/category:
+    post:
+      tags:
+      - budget-book-controller
+      operationId: addCategoryToBudgetBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BudgetBooksCategoriesDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryDTO'
+    delete:
+      tags:
+      - budget-book-controller
+      operationId: deleteCategoryToBudgetBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BudgetBooksCategoriesDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /users/{id}:
+    get:
+      tags:
+      - user-controller
+      operationId: getUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+  /users/auth/{authId}:
+    get:
+      tags:
+      - user-controller
+      operationId: getUserByAuthId
+      parameters:
+      - name: authId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+  /macro-categories/{id}:
+    get:
+      tags:
+      - macro-category-controller
+      operationId: getMacroCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MacroCategoryDTO'
+  /macro-categories/user/{userId}:
+    get:
+      tags:
+      - macro-category-controller
+      operationId: getMacroCategoriesByUserId
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MacroCategoryDTO'
+  /macro-categories/budget-book/{budgetBookId}:
+    get:
+      tags:
+      - macro-category-controller
+      operationId: getMacroCategoriesByBudgetBookId
+      parameters:
+      - name: budgetBookId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MacroCategoryDTO'
+  /categories/{id}:
+    get:
+      tags:
+      - category-controller
+      operationId: getCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDTO'
+  /categories/user/{userId}:
+    get:
+      tags:
+      - category-controller
+      operationId: getCategoriesByUserId
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryDTO'
+  /budget-books/{budgetBookId}:
+    get:
+      tags:
+      - budget-book-controller
+      operationId: getBudgetBookById
+      parameters:
+      - name: budgetBookId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetBookDTO'
+  /budget-books/{budgetBookId}/categories:
+    get:
+      tags:
+      - budget-book-controller
+      operationId: getAllBudgetBooksCategories
+      parameters:
+      - name: budgetBookId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryDTO'
+  /amounts/{id}:
+    get:
+      tags:
+      - amounts-controller
+      operationId: getAmount
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmountDTO'
+  /amounts/budget-book/{budgetBookId}:
+    get:
+      tags:
+      - amounts-controller
+      operationId: getAmountsByBudgetBookId
+      parameters:
+      - name: budgetBookId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AmountDTO'
+  /amount-types/{id}:
+    get:
+      tags:
+      - amount-type-controller
+      operationId: getAmountType
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmountTypeDTO'
+components:
+  schemas:
+    UserDTO:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int32
+        authId:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        insertionTimestamp:
+          type: string
+          format: date-time
+        changeTimestamp:
+          type: string
+          format: date-time
+        cancellationTimestamp:
+          type: string
+          format: date-time
+    AmountTypeDTO:
+      type: object
+      properties:
+        amountTypeId:
+          type: integer
+          format: int32
+        description:
+          type: string
+    CategoryDTO:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int32
+        creatorUserId:
+          type: integer
+          format: int32
+        description:
+          type: string
+        macroCategory:
+          $ref: '#/components/schemas/MacroCategoryDTO'
+        amountType:
+          $ref: '#/components/schemas/AmountTypeDTO'
+        insertionTimestamp:
+          type: string
+          format: date-time
+        changeTimestamp:
+          type: string
+          format: date-time
+        cancellationTimestamp:
+          type: string
+          format: date-time
+    MacroCategoryDTO:
+      type: object
+      properties:
+        macroCategoryId:
+          type: integer
+          format: int32
+        creatorUserId:
+          type: integer
+          format: int32
+        description:
+          type: string
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryDTO'
+        insertionTimestamp:
+          type: string
+          format: date-time
+        changeTimestamp:
+          type: string
+          format: date-time
+        cancellationTimestamp:
+          type: string
+          format: date-time
+    BudgetBookDTO:
+      type: object
+      properties:
+        budgetBookId:
+          type: integer
+          format: int32
+        creatorUserId:
+          type: integer
+          format: int32
+        description:
+          type: string
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryDTO'
+        insertionTimestamp:
+          type: string
+          format: date-time
+        changeTimestamp:
+          type: string
+          format: date-time
+        cancellationTimestamp:
+          type: string
+          format: date-time
+    AmountDTO:
+      type: object
+      properties:
+        amountId:
+          type: integer
+          format: int32
+        budgetBookId:
+          type: integer
+          format: int32
+        creatorUserId:
+          type: integer
+          format: int32
+        category:
+          $ref: '#/components/schemas/CategoryDTO'
+        date:
+          type: string
+          format: date-time
+        description:
+          type: string
+        planned:
+          type: number
+          format: float
+        actual:
+          type: number
+          format: float
+        amountType:
+          $ref: '#/components/schemas/AmountTypeDTO'
+        insertionTimestamp:
+          type: string
+          format: date-time
+        changeTimestamp:
+          type: string
+          format: date-time
+        cancellationTimestamp:
+          type: string
+          format: date-time
+    UserBudgetBooksDTO:
+      type: object
+      properties:
+        usersBudgetBookId:
+          type: integer
+          format: int32
+        userId:
+          type: integer
+          format: int32
+        budgetBookId:
+          type: integer
+          format: int32
+        insertionTimestamp:
+          type: string
+          format: date-time
+        changeTimestamp:
+          type: string
+          format: date-time
+        cancellationTimestamp:
+          type: string
+          format: date-time
+    BudgetBooksCategoriesDTO:
+      type: object
+      properties:
+        budgetBooksCategoriesId:
+          type: integer
+          format: int32
+        budgetBookId:
+          type: integer
+          format: int32
+        categoryId:
+          type: integer
+          format: int32
+        insertionTimestamp:
+          type: string
+          format: date-time
+        changeTimestamp:
+          type: string
+          format: date-time
+        cancellationTimestamp:
+          type: string
+          format: date-time
+    PageBudgetBookDTO:
+      type: object
+      properties:
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/BudgetBookDTO'
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/Sort'
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        empty:
+          type: boolean
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        sort:
+          $ref: '#/components/schemas/Sort'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        unpaged:
+          type: boolean
+        paged:
+          type: boolean
+    Sort:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean

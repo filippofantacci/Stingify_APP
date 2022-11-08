@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="navigateToBudgetBooks()">
+        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+        Back
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{budgetBook?.description}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="navigateToBudgetBookEdit()">
+        Edit
+        <ion-icon slot="end" name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let amount of amounts" (click)="onAmountClicked()">
+    <ion-card-header>
+      <ion-card-title>{{amount.description}}</ion-card-title>
+      <ion-label>{{amount?.category?.description}} - {{amount?.category?.macroCategory?.description}}</ion-label>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>Date</ion-col>
+          <ion-col>Planned</ion-col>
+          <ion-col>Actual</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <b>
+              {{amount.date | date: 'dd/MM/yyyy'}}
+            </b>
+          </ion-col>
+          <ion-col>
+            <ion-text [color]="getColor(amount.amountType)">
+              <b>
+                {{amount.planned | currency:'EUR': 'symbol' }}
+              </b>
+            </ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text [color]="getColor(amount.amountType)">
+              <b>
+                {{amount.actual | currency:'EUR': 'symbol' }}
+              </b>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+<ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab-button>
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="start">
+    <ion-fab-button color="danger" (click)="addExpenseAmount()">
+      <ion-icon name="remove-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="success" (click)="addIncomeAmount()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="warning" (click)="addSavingAmount()">
+      <ion-icon name="wallet-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>

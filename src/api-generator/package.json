@@ -1,0 +1,19 @@
+{
+  "name": "stingify-app-api-generator",
+  "version": "1.0.0",
+  "description": "Pacchetto che generale api con ng-openapi-gen",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "npm i && npm run clean && npm run generate",
+    "clean": "npx rimraf ../app/core/api",
+    "downloadapi":"npm run downloadstingify",
+    "generate": "npm run clean && npm run generatestingify",
+    "downloadstingify": " curl -o api-docs-stingify.yaml http://localhost:8081/api-docs-stingify.yaml",
+    "generatestingify": " npx rimraf ../app/core/api/stingify && npx ng-openapi-gen -c stingify-options-gen.json"
+  },
+  "devDependencies": {
+    "ng-openapi-gen": "^0.14.0",
+    "rimraf": "3.0.2"
+  }
+}

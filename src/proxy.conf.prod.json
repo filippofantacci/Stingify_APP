@@ -1,0 +1,10 @@
+{
+    "/app/stingify/api/v1": {
+        "target": "http://localhost:8081",
+        "secure": false,
+        "pathRewrite": {
+            "^/app/stingify/api/v1": ""
+        },
+        "changeOrigin": true
+    }
+}

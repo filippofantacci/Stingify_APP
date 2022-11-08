@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="navigateToBudgetBooks()">
+        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+        Back
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Create Budget Book</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen *ngIf="ready">
+  <!-- form modifica utente -->
+  <form [formGroup]="formAddBudgetBook">
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label>Description: </ion-label>
+        <ion-input formControlName="description" class="ion-text-right"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label>Categories: </ion-label>
+      </ion-item>
+
+      <!-- Macro categories -->
+      <ion-item *ngFor="let macroCategory of macroCategories">
+        <ion-label>{{macroCategory.description}}: </ion-label>
+        <!-- chips of the categories of the macro category -->
+        <ion-chip *ngFor="let category of macroCategory.categories" [color]="getColor(category.amountType)"
+          [outline]="!isSelected(category)" (click)="onCategoryClicked(category)">
+          {{category.description}}
+          <ion-icon *ngIf="!isSelected(category)" name="add"></ion-icon>
+          <ion-icon *ngIf="isSelected(category)" name="close"></ion-icon>
+        </ion-chip>
+      </ion-item>
+
+    </ion-list>
+
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row class="ion-justify-content-between">
+
+      <ion-col>
+        <ion-button (click)="onSubmit()" [disabled]="!formAddBudgetBook.valid" expand="block" color="primary">
+          <ion-icon slot="start" icon="save-outline" class="component-icon"></ion-icon>
+          Save
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="navigateToBudgetBooks()" expand="block" color="secondary" fill="outline">
+          <ion-icon slot="start" icon="arrow-undo-outline" class="component-icon"></ion-icon>
+          Cancel
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-footer>

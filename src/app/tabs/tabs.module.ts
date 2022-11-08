@@ -14,6 +14,9 @@ import { TabsPage } from './tabs.page';
     FormsModule,
     TabsPageRoutingModule
   ],
-  declarations: [TabsPage]
+  declarations: [TabsPage],
+  // schemas: [
+  //   CUSTOM_ELEMENTS_SCHEMA
+  // ],
 })
 export class TabsPageModule {}

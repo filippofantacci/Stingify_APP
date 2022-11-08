@@ -1,8 +1,18 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      {{title}}
-    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="logOut()">
+        <ion-icon slot="end" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <ion-title>{{title}}</ion-title>
+    
+    <ion-buttons slot="end">
+      <ion-button (click)="swithcTheme()">
+        <app-theme-changer></app-theme-changer>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

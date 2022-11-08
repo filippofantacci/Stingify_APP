@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="navigateBack()">
+        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+        Back
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Edit Budget Book</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen *ngIf="ready">
+  <!-- form modifica utente -->
+  <form [formGroup]="formEditBudgetBook">
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label>Description: </ion-label>
+        <ion-input formControlName="description" class="ion-text-right"></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row class="ion-justify-content-between">
+
+      <ion-col>
+        <ion-button (click)="onSubmit()" [disabled]="!formEditBudgetBook.valid" expand="block" color="primary">
+          <ion-icon slot="start" icon="save-outline" class="component-icon"></ion-icon>
+          Save
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="navigateBack()" expand="block" color="secondary" fill="outline">
+          <ion-icon slot="start" icon="arrow-undo-outline" class="component-icon"></ion-icon>
+          Cancel
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-footer>
