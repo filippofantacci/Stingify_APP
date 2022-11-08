@@ -17,7 +17,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let amount of amounts" (click)="onAmountClicked()">
+  <ion-card *ngFor="let amount of amounts">
     <ion-card-header>
       <ion-card-title>{{amount.description}}</ion-card-title>
       <ion-label>{{amount?.category?.description}} - {{amount?.category?.macroCategory?.description}}</ion-label>
@@ -52,6 +52,18 @@
         </ion-row>
       </ion-grid>
     </ion-card-content>
+    <ion-footer>
+      <ion-grid>
+        <ion-row class="ion-justify-content-between">
+          <ion-col size="auto" class="ion-text-center">
+            <div>{{getLastChangeElapsedTime(amount)}} ago</div>
+          </ion-col>
+          <ion-col size="auto" class="ion-text-center">
+            <ion-icon name="ellipsis-horizontal-outline" (click)="showActions(amount)"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-footer>
   </ion-card>
 
 </ion-content>

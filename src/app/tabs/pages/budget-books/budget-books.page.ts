@@ -55,7 +55,6 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
 
       this.actionSheetCtrl.create({
         header: budgetBook.description,
-        // subHeader: 'Example subheader',
         buttons: [
           {
             text: 'Delete',
@@ -97,7 +96,7 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
         {
           text: 'Delete the budget book',
           handler: () => {
-            this.deletebudgetBook(budgetBook);
+            this.deleteBudgetBook(budgetBook);
           }
         }
       ]
@@ -108,7 +107,7 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
     });  
   }
   
-  private deletebudgetBook(budgetBook: BudgetBookDto): void {
+  private deleteBudgetBook(budgetBook: BudgetBookDto): void {
     
     this.budgetBookControllerService.deleteBudgetBook({body: budgetBook}).subscribe(
       res => {

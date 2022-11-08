@@ -8,6 +8,7 @@ import { BudgetBookDetailPageRoutingModule } from './budget-book-detail-routing.
 
 import { BudgetBookDetailPage } from './budget-book-detail.page';
 import { AddAmountModalComponent } from './add-amount-modal/add-amount-modal.component';
+import { EditAmountModalComponent } from './edit-amount-modal/edit-amount-modal.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { AddAmountModalComponent } from './add-amount-modal/add-amount-modal.com
   declarations: [
     BudgetBookDetailPage,
     AddAmountModalComponent,
+    EditAmountModalComponent,
   ]
 })
 export class BudgetBookDetailPageModule {}
