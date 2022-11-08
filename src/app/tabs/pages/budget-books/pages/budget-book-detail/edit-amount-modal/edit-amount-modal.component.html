@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content fullscreen *ngIf="ready">
 
-  <form [formGroup]="formEditAmount" (ngSubmit)="onSubmit()">
+  <form [formGroup]="formEditAmount">
 
     <ion-list>
       <!-- amountType -->
@@ -41,12 +41,12 @@
       </ion-item> -->
 
       <!-- date -->
-      <!-- <ion-item id="open-datetime-modal">
+      <ion-item id="open-datetime-modal">
         <ion-label>Date: </ion-label>
         <ion-text slot="end">{{ date | date: 'dd/MM/yyyy' }}</ion-text>
-      </ion-item> -->
+      </ion-item>
 
-      <!-- <ion-modal class="datetime-modal" trigger="open-datetime-modal">
+      <ion-modal class="datetime-modal" trigger="open-datetime-modal">
         <ng-template>
           <ion-content>
             <ion-datetime 
@@ -56,19 +56,19 @@
           </ion-datetime>
           </ion-content>
         </ng-template>
-      </ion-modal> -->
+      </ion-modal>
 
       <!-- planned -->
-      <!-- <ion-item>
+      <ion-item>
         <ion-label>Planned:</ion-label>
         <ion-input formControlName="planned" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
-      </ion-item> -->
+      </ion-item>
       
       <!-- actual -->
-      <!-- <ion-item>
+      <ion-item>
         <ion-label>Actual:</ion-label>
         <ion-input formControlName="actual" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
-      </ion-item> -->
+      </ion-item>
 
     </ion-list>
 

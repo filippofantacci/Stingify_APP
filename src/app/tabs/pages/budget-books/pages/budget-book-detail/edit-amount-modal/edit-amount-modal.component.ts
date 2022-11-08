@@ -24,6 +24,9 @@ export class EditAmountModalComponent implements OnInit, OnDestroy {
 
   public formEditAmount: FormGroup;
 
+  public amountRegex = /^-?\d*[.,]?\d{0,2}$/;
+
+  public date: Date;
 
   constructor(
     private userService: UserService,
@@ -36,21 +39,29 @@ export class EditAmountModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    this.date = new Date(this.amount.date);
+
     this.formEditAmount = this.fb.group({
       // amountType: [this.amount.amountType.amountTypeId, [Validators.required]],
       description: [this.amount.description, [Validators.required, Validators.maxLength(255)]],
       // category: [''],
-      // date: [new Date().toISOString(), [Validators.required]],
-      // planned: ['', [Validators.required, Validators.pattern(this.amountRegex), Validators.max(99999.99)]],
-      // actual: ['', [Validators.required, Validators.pattern(this.amountRegex), Validators.max(99999.99)]],
+      date: [new Date(this.amount.date).toISOString(), [Validators.required]],
+      planned: [this.amount.planned, [Validators.required, Validators.pattern(this.amountRegex), Validators.max(99999.99)]],
+      actual: [this.amount.actual, [Validators.required, Validators.pattern(this.amountRegex), Validators.max(99999.99)]],
     });
 
-
     this.ready = true;
+
+    this.changeDetectorRef.markForCheck();
   }
-  
+
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  public dateChange(): void {
+    this.date = new Date(this.formEditAmount.controls.date.value);
+    this.changeDetectorRef.markForCheck();
   }
 
   public onSubmit(): void {
@@ -61,9 +72,9 @@ export class EditAmountModalComponent implements OnInit, OnDestroy {
       amountType: this.amount.amountType,
       description: this.formEditAmount.controls.description.value,
       category: this.amount.category,
-      date: formatDateYYYYMMdd(this.amount.date),
-      planned: this.amount.planned,
-      actual: this.amount.actual,
+      date: formatDateYYYYMMdd(this.formEditAmount.controls.date.value),
+      planned: this.formEditAmount.controls.planned.value,
+      actual: this.formEditAmount.controls.actual.value,
     }
     this.presentLoadingWithOptions().then(spinner => {
 
