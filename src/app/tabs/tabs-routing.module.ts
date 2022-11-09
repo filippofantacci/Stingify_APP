@@ -43,6 +43,14 @@ const routes: Routes = [
         canActivate: [RouteAccessGuard],
         loadChildren: () => import('./pages/reports/reports.module').then( m => m.ReportsPageModule)
       },
+      {
+        path: 'categories',
+        data : {
+          url: 'categories'
+        },
+        canActivate: [RouteAccessGuard],
+        loadChildren: () => import('./pages/categories/categories.module').then( m => m.CategoriesPageModule)
+      },
     ]
   },
 ];
