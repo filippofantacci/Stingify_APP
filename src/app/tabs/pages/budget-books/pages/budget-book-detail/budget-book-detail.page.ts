@@ -22,6 +22,11 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
 
   private subscriptions: Array<Subscription> = new Array<Subscription>();
 
+  public readonly AMOUNTS_SIZE = 10;
+  private nextPageAmounts = 0;
+  private totalAmounts = 0;
+  private budgetBookId: number;
+
   public budgetBook: BudgetBookDto;
   public macroCategories: MacroCategoryDto[] = [];
   public amounts: AmountDto[] = [];
@@ -40,7 +45,8 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.getBudgetBooksDetails(this.route.snapshot.queryParams['id']);
+    this.budgetBookId = this.route.snapshot.queryParams['id'];
+    this.getBudgetBooksDetails();
   }
 
   ngOnDestroy() {
@@ -142,70 +148,117 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
       console.log(reason);
     });
 
-}
-
-private showAlertDeleteAmount(amount: AmountDto): void {
-  this.alertController.create({
-    header: "Alert",
-    message: "Deleting the amount " + amount.description + ", the information will be lost." ,
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel'
-      },
-      {
-        text: 'Delete the amount',
-        handler: () => {
-          this.deleteAmount(amount);
-        }
-      }
-    ]
-  }).then(alert => {
-    alert.present();
-  }).catch(reason => {
-    console.log(reason);
-  });  
-}
-
-private deleteAmount(amount: AmountDto): void {
-    
-  this.amountsControllerService.deleteAmount({body: amount}).subscribe(
-    res => {
-      this.refreshAmounts();
-    }
-  );
-}
-  // TODO: PAGINAZIONE SCROLL TO RELOAD LOAD MORE ECC.
-  public refreshAmounts(): void {
-    this.presentLoadingWithOptions().then(spinner => {
-      this.subscriptions.push(
-        this.amountsControllerService.getAmountsByBudgetBookId(
-          { budgetBookId: this.budgetBook.budgetBookId }).subscribe(res => {
-            this.amounts = res;
-            this.changeDetectorRef.markForCheck();
-            spinner.dismiss();
-          })
-      );
-    })
-      .catch(reason => {
-        console.log(reason);
-      });
   }
 
-  private getBudgetBooksDetails(budgetBookId: number): void {
+  private showAlertDeleteAmount(amount: AmountDto): void {
+    this.alertController.create({
+      header: "Alert",
+      message: "Deleting the amount " + amount.description + ", the information will be lost.",
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete the amount',
+          handler: () => {
+            this.deleteAmount(amount);
+          }
+        }
+      ]
+    }).then(alert => {
+      alert.present();
+    }).catch(reason => {
+      console.log(reason);
+    });
+  }
+
+  private deleteAmount(amount: AmountDto): void {
+
+    this.amountsControllerService.deleteAmount({ body: amount }).subscribe(
+      res => {
+        this.refreshAmounts();
+      }
+    );
+  }
+
+  public refreshAmounts(event?): void {
+    this.nextPageAmounts = 0;
+    this.subscriptions.push(
+      this.amountsControllerService.getAmountsByBudgetBookId({
+        page: this.nextPageAmounts,
+        size: this.AMOUNTS_SIZE,
+        budgetBookId: this.budgetBookId
+      }).subscribe(
+        res => {
+          this.totalAmounts = res.totalElements;
+          this.amounts = res.content;
+          this.nextPageAmounts++;
+          if (event) event.target.complete();
+          this.changeDetectorRef.markForCheck();
+        },
+        err => {
+          if (event) event.target.complete();
+          this.changeDetectorRef.markForCheck();
+        }
+      )
+    );
+
+  }
+
+  public loadMoreAmounts(event): void {
+
+    if (this.amounts.length !== this.totalAmounts) {
+
+      this.subscriptions.push(
+        this.amountsControllerService.getAmountsByBudgetBookId({
+          page: this.nextPageAmounts,
+          size: this.AMOUNTS_SIZE,
+          budgetBookId: this.budgetBookId
+        }).subscribe(
+          res => {
+            this.amounts = this.amounts.concat(res.content);
+            event.target.complete();
+            this.nextPageAmounts++;
+            if (this.amounts.length === this.totalAmounts) {
+              event.target.disabled = true;
+            }
+            this.changeDetectorRef.markForCheck();
+          },
+          err => {
+            event.target.complete();
+            this.changeDetectorRef.markForCheck();
+          }
+        )
+      );
+    } else {
+      event.target.disabled = true;
+    }
+
+  }
+
+  private getBudgetBooksDetails(): void {
     this.presentLoadingWithOptions().then(spinner => {
 
       this.subscriptions.push(
         forkJoin([
-          this.budgetBookControllerService.getBudgetBookById({ budgetBookId: budgetBookId }),
-          this.macroCategoryControllerService.getMacroCategoriesByBudgetBookId({ budgetBookId: budgetBookId }),
-          this.amountsControllerService.getAmountsByBudgetBookId({ budgetBookId: budgetBookId })
+          this.budgetBookControllerService.getBudgetBookById({ budgetBookId: this.budgetBookId }),
+          this.macroCategoryControllerService.getMacroCategoriesByBudgetBookId({ budgetBookId: this.budgetBookId }),
+          this.amountsControllerService.getAmountsByBudgetBookId({
+            page: this.nextPageAmounts,
+            size: this.AMOUNTS_SIZE,
+            budgetBookId: this.budgetBookId
+          })
         ]).pipe(
-          map(([budgetbook, macroCategories, amounts]) => {
+          map(([budgetbook, macroCategories, pagedAmounts]) => {
 
             this.budgetBook = budgetbook;
             this.macroCategories = macroCategories;
-            this.amounts = amounts;
+
+            this.totalAmounts = pagedAmounts.totalElements
+            this.amounts = pagedAmounts.content;
+            this.nextPageAmounts++;
+
             this.changeDetectorRef.markForCheck();
 
           })

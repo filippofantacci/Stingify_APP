@@ -9,3 +9,4 @@ export { BudgetBooksCategoriesDto } from './models/budget-books-categories-dto';
 export { PageBudgetBookDto } from './models/page-budget-book-dto';
 export { PageableObject } from './models/pageable-object';
 export { Sort } from './models/sort';
+export { PageAmountDto } from './models/page-amount-dto';

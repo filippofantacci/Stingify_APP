@@ -183,7 +183,7 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
 
   public loadMoreBudgetBooks(event): void {
 
-    if (this.budgetBooksList.length === this.totalBudgetBooks) {
+    if (this.budgetBooksList.length !== this.totalBudgetBooks) {
 
       this.subscriptions.push(
         this.budgetBookControllerService.getAllUserBudgetBooksByUserId({

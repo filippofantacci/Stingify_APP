@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { AmountDto } from '../models/amount-dto';
+import { PageAmountDto } from '../models/page-amount-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -252,7 +253,7 @@ export class AmountsControllerService extends BaseService {
   /**
    * Path part for operation getAmountsByBudgetBookId
    */
-  static readonly GetAmountsByBudgetBookIdPath = '/amounts/budget-book/{budgetBookId}';
+  static readonly GetAmountsByBudgetBookIdPath = '/amounts/budget-book/';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -261,12 +262,30 @@ export class AmountsControllerService extends BaseService {
    * This method doesn't expect any request body.
    */
   getAmountsByBudgetBookId$Response(params: {
+
+    /**
+     * Zero-based page index (0..N)
+     */
+    page?: number;
+
+    /**
+     * The size of the page to be returned
+     */
+    size?: number;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
     budgetBookId: number;
-  }): Observable<StrictHttpResponse<Array<AmountDto>>> {
+  }): Observable<StrictHttpResponse<PageAmountDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, AmountsControllerService.GetAmountsByBudgetBookIdPath, 'get');
     if (params) {
-      rb.path('budgetBookId', params.budgetBookId, {});
+      rb.query('page', params.page, {});
+      rb.query('size', params.size, {});
+      rb.query('sort', params.sort, {});
+      rb.query('budgetBookId', params.budgetBookId, {});
     }
 
     return this.http.request(rb.build({
@@ -275,7 +294,7 @@ export class AmountsControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<AmountDto>>;
+        return r as StrictHttpResponse<PageAmountDto>;
       })
     );
   }
@@ -287,11 +306,26 @@ export class AmountsControllerService extends BaseService {
    * This method doesn't expect any request body.
    */
   getAmountsByBudgetBookId(params: {
+
+    /**
+     * Zero-based page index (0..N)
+     */
+    page?: number;
+
+    /**
+     * The size of the page to be returned
+     */
+    size?: number;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
     budgetBookId: number;
-  }): Observable<Array<AmountDto>> {
+  }): Observable<PageAmountDto> {
 
     return this.getAmountsByBudgetBookId$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<AmountDto>>) => r.body as Array<AmountDto>)
+      map((r: StrictHttpResponse<PageAmountDto>) => r.body as PageAmountDto)
     );
   }
 
