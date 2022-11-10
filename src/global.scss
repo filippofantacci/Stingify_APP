@@ -71,3 +71,24 @@
   
     }
   }
+
+  .cancelled-text {
+    text-decoration: line-through;
+  }
+
+  /* card border bottom color based on amount types */
+  ion-card.amount-type {
+    
+    
+    &.Expense {
+      border-top: 2px solid var(--ion-color-danger);
+    }
+    
+    &.Incoming {
+      border-top: 2px solid var(--ion-color-success);
+    }
+    
+    &.Saving {
+      border-top: 2px solid var(--ion-color-primary);
+    }
+  }

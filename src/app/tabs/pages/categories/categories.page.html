@@ -1,38 +1,90 @@
 <app-tab [title]="'Cateories'">
 
-  <!-- <ion-refresher slot="fixed" (ionRefresh)="refreshBudgetBooks($event)">
+  <ion-segment [scrollable]="true" (ionChange)="segmentChanged($event)" [value]="selectedSegment">
+    <ion-segment-button [value]="CATEGORIES">
+      <ion-label>Categories</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="MACRO_CATEGORIES">
+      <ion-label>Macro Categories</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-refresher slot="fixed" (ionRefresh)="reloadData($event)">
     <ion-refresher-content>
     </ion-refresher-content>
-  </ion-refresher> -->
+  </ion-refresher>
 
-  <!-- <ion-card *ngFor="let budgetBook of budgetBooksList">
-    <ion-card-header (click)="navigateToBudgetBook(budgetBook)">
-      <ion-card-title>{{budgetBook.description}}</ion-card-title>
-    </ion-card-header>
-    <ion-footer>
-      <ion-grid>
-        <ion-row class="ion-justify-content-between">
-          <ion-col size="auto" class="ion-text-center">
-            <div>{{getLastChangeElapsedTime(budgetBook)}} ago</div>
-          </ion-col>
-          <ion-col size="auto" class="ion-text-center">
-            <ion-icon name="ellipsis-horizontal-outline" (click)="showActions(budgetBook)"></ion-icon>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-footer>
-  </ion-card> -->
-  
-  <!-- <ion-infinite-scroll threshold="50%" (ionInfinite)="loadMoreBudgetBooks($event)">
-    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Load more">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
+  <ng-container *ngIf="showCategories">
+    <ion-card *ngFor="let category of categories" [class]="getCategoryCardClass(category)" >
+      <ion-card-header>
+        <ion-card-title [ngClass]="category.cancellationTimestamp ? 'cancelled-text' : ''">
+          {{category.description}}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          Macro Category: 
+          <b>
+            <ng-container *ngIf="category.macroCategory">{{category.macroCategory.description}}</ng-container>
+            <ng-container *ngIf="!category.macroCategory">none</ng-container>
+          </b>
+        </p>
+        <p>
+          Amount Type: 
+          <b>
+            {{category.amountType.description}}
+          </b>
+        </p>
+      </ion-card-content>
+      <ion-footer>
+        <ion-grid>
+          <ion-row class="ion-justify-content-between">
+            <ion-col size="auto" class="ion-text-center">
+              <div>{{getLastChangeElapsedTime(category)}} ago</div>
+            </ion-col>
+            <ion-col size="auto" class="ion-text-center">
+              <ion-icon name="ellipsis-horizontal-outline" (click)="showActionsCategory(category)"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-footer>
+    </ion-card>
+  </ng-container>
 
-  
+  <ng-container *ngIf="showMacroCategories">
+    <ion-card *ngFor="let macroCategory of macroCategories">
+      <ion-card-header>
+        <ion-card-title [ngClass]="macroCategory.cancellationTimestamp ? 'cancelled-text' : ''">
+          {{macroCategory.description}}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <!-- chips of the categories of the macro category -->
+        <ion-chip *ngFor="let category of macroCategory.categories" [color]="getColor(category.amountType)"
+          [outline]="true" (click)="onCategoryClicked(category)">
+          {{category.description}}
+          <ion-icon name="close"></ion-icon>
+        </ion-chip>
+      </ion-card-content>
+      <ion-footer>
+        <ion-grid>
+          <ion-row class="ion-justify-content-between">
+            <ion-col size="auto" class="ion-text-center">
+              <div>{{getLastChangeElapsedTime(macroCategory)}} ago</div>
+            </ion-col>
+            <ion-col size="auto" class="ion-text-center">
+              <ion-icon name="ellipsis-horizontal-outline" (click)="showActionsMacroCategory(macroCategory)"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-footer>
+    </ion-card>
+  </ng-container>
+
 </app-tab>
 
-<!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="navigateToBudgetBookCreation()">
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="addButtonClicked()">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
-</ion-fab> -->
+</ion-fab>
