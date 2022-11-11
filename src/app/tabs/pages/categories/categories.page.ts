@@ -8,6 +8,7 @@ import { AmountTypesEnum } from 'src/app/utils/app-constants';
 import { getLastChangeElapsedTime } from 'src/app/utils/date-utils';
 import { getAmountTypeColor } from 'src/app/utils/style-utils';
 import { CreateCategoryModalComponent } from './modals/create-category-modal/create-category-modal.component';
+import { EditCategoryModalComponent } from './modals/edit-category-modal/edit-category-modal.component';
 
 @Component({
   selector: 'app-categories',
@@ -145,6 +146,29 @@ export class CategoriesPage implements OnInit, OnDestroy {
     });
   }
 
+  public showAlertDeleteCategory(category: CategoryDto): void {
+    this.alertController.create({
+      header: "Alert",
+      message: "Are you sure you want to delete " + category.description + ".",
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Confirm',
+          handler: () => {
+            this.deleteCategory(category);
+          }
+        }
+      ]
+    }).then(alert => {
+      alert.present();
+    }).catch(reason => {
+      console.log(reason);
+    });
+  }
+
   public showActionsCategory(category: CategoryDto): void {
 
     this.actionSheetCtrl.create({
@@ -155,21 +179,22 @@ export class CategoriesPage implements OnInit, OnDestroy {
           role: 'destructive',
           icon: 'trash',
           handler: () => {
-            // this.showAlertDeleteAmount(amount);
+            this.showAlertDeleteCategory(category);
           }
         },
         {
           text: 'Edit Category',
           icon: 'create',
           handler: () => {
-            // this.openEditAmountmodal(amount);
+            this.openEditCategoryModal(category);
           }
         },
         {
           text: 'Add To Macro Category',
           icon: 'add',
           handler: () => {
-            // this.openEditAmountmodal(amount);
+            this.selectedSegment = this.MACRO_CATEGORIES;
+            this.changeDetectorRef.markForCheck();
           }
         },
         {
@@ -218,6 +243,30 @@ export class CategoriesPage implements OnInit, OnDestroy {
       });
   }
 
+  public deleteCategory(category: CategoryDto): void {
+
+    this.presentLoadingWithOptions().then(spinner => {
+      this.subscriptions.push(
+        this.categoryControllerService.deleteCategory({
+          body: category
+        }).subscribe(
+          res => {
+            this.getCategoriesWithSpinner();
+            spinner.dismiss();
+          },
+          err => {
+            this.changeDetectorRef.markForCheck();
+            spinner.dismiss();
+          }
+        )
+      );
+
+    })
+      .catch(reason => {
+        console.log(reason);
+      });
+  }
+
   public addButtonClicked(): void {
 
     if (this.selectedSegment === this.CATEGORIES) {
@@ -235,7 +284,29 @@ export class CategoriesPage implements OnInit, OnDestroy {
   public openModalCreateCategory(): void {
     this.modalController.create({
       component: CreateCategoryModalComponent,
+      canDismiss: true
+    })
+      .then(modal => {
+        modal.present();
+        modal.onDidDismiss().then(res => {
+          this.getCategoriesWithSpinner();
+        })
+          .catch(reason => {
+            console.log(reason);
+          })
+      })
+      .catch(reason => {
+        console.log(reason);
+      });
+  }
+
+  public openEditCategoryModal(category: CategoryDto): void {
+    this.modalController.create({
+      component: EditCategoryModalComponent,
       canDismiss: true,
+      componentProps: {
+        category: category
+      }
     })
       .then(modal => {
         modal.present();

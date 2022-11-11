@@ -1,3 +1,4 @@
+import { MacroCategoryDto } from "../core/api/stingify/models"
 
 
 export enum TOASTER_TYPE {
@@ -21,4 +22,9 @@ export enum AmountTypesEnum {
   Expense = 1 ,
   Incoming = 2, 
   Saving = 3
+}
+
+export const NO_MACRO_CATEGORY: MacroCategoryDto = {
+  macroCategoryId: -1,
+  description: "none"
 }

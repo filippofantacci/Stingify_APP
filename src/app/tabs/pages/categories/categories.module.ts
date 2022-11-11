@@ -9,6 +9,7 @@ import { CategoriesPageRoutingModule } from './categories-routing.module';
 import { CategoriesPage } from './categories.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateCategoryModalComponent } from './modals/create-category-modal/create-category-modal.component';
+import { EditCategoryModalComponent } from './modals/edit-category-modal/edit-category-modal.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { CreateCategoryModalComponent } from './modals/create-category-modal/cre
   declarations: [
     CategoriesPage,
     CreateCategoryModalComponent,
+    EditCategoryModalComponent,
   ]
 })
 export class CategoriesPageModule {}

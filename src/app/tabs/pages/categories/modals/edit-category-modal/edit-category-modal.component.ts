@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { forkJoin, Subscription } from 'rxjs';
@@ -9,22 +9,23 @@ import { UserService } from 'src/app/core/services/user.service';
 import { NO_MACRO_CATEGORY } from 'src/app/utils/app-constants';
 
 @Component({
-  selector: 'app-create-category-modal',
-  templateUrl: './create-category-modal.component.html',
-  styleUrls: ['./create-category-modal.component.scss'],
+  selector: 'app-edit-category-modal',
+  templateUrl: './edit-category-modal.component.html',
+  styleUrls: ['./edit-category-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateCategoryModalComponent implements OnInit, OnDestroy {
+export class EditCategoryModalComponent implements OnInit, OnDestroy {
 
   private subscriptions: Array<Subscription> = new Array<Subscription>();
+
+  @Input() category: CategoryDto;
 
   public macroCategories: MacroCategoryDto[] = [];
   public amountTypes: AmountTypeDto[] = [];
 
   public ready: boolean = false;
 
-  public formCreateCategory: FormGroup;
-
+  public formEditCategory: FormGroup;
 
   constructor(
     private userService: UserService,
@@ -38,16 +39,14 @@ export class CreateCategoryModalComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
     this.ready = false;
     this.getDomains();
 
-    this.formCreateCategory = this.fb.group({
-      description: ['', [Validators.required, Validators.maxLength(255)]],
-      macroCategory: [''],
-      amountType: ['', [Validators.required]],
+    this.formEditCategory = this.fb.group({
+      description: [this.category.description, [Validators.required, Validators.maxLength(255)]],
+      macroCategory: [this.category.macroCategory?.macroCategoryId],
+      amountType: [this.category.amountType.amountTypeId, [Validators.required]],
     });
-
   }
 
   ngOnDestroy() {
@@ -65,7 +64,6 @@ export class CreateCategoryModalComponent implements OnInit, OnDestroy {
 
             this.macroCategories = macroCategories;
             this.macroCategories.push(NO_MACRO_CATEGORY)
-
             this.amountTypes = amountTypes;
             this.ready = true;
 
@@ -84,16 +82,21 @@ export class CreateCategoryModalComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
+
+    // show alert involved data
+
     const inputCategory: CategoryDto = {
-      creatorUserId: this.userService.userId,
-      description: this.formCreateCategory.controls.description.value,
-      amountType: this.formCreateCategory.controls.amountType.value,
-      macroCategory: this.formCreateCategory.controls.macroCategory.value ? this.formCreateCategory.controls.macroCategory.value : undefined
+      categoryId: this.category.categoryId,
+      creatorUserId: this.category.creatorUserId,
+      description: this.formEditCategory.controls.description.value,
+      amountType: { amountTypeId: this.formEditCategory.controls.amountType.value },
+      macroCategory: this.formEditCategory.controls.macroCategory.value && this.formEditCategory.controls.macroCategory.value !== NO_MACRO_CATEGORY.macroCategoryId
+        ? { macroCategoryId: this.formEditCategory.controls.macroCategory.value } : undefined
     }
     this.presentLoadingWithOptions().then(spinner => {
 
       this.subscriptions.push(
-        this.categoryControllerService.addCategory({ body: inputCategory }).subscribe(
+        this.categoryControllerService.updateCategory({ body: inputCategory }).subscribe(
           res => {
             spinner.dismiss();
             this.close(true);

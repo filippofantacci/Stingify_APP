@@ -96,7 +96,7 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
       });
   }
 
-  private openEditAmountmodal(amount: AmountDto): void {
+  private openEditAmountModal(amount: AmountDto): void {
 
     this.modalController.create({
       component: EditAmountModalComponent,
@@ -137,7 +137,7 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
           text: 'Edit',
           icon: 'create',
           handler: () => {
-            this.openEditAmountmodal(amount);
+            this.openEditAmountModal(amount);
           }
         },
         {

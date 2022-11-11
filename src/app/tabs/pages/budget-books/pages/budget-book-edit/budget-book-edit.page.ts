@@ -101,7 +101,7 @@ export class BudgetBookEditPage implements OnInit, OnDestroy {
   public onSubmit(): void {
     const inputBudgetBook: BudgetBookDto = {
       budgetBookId: this.budgetBook.budgetBookId,
-      creatorUserId: this.userService.userId,
+      creatorUserId: this.budgetBook.creatorUserId,
       description: this.formEditBudgetBook.controls.description.value,
       categories: this.formEditBudgetBook.controls.categories.value,
     }

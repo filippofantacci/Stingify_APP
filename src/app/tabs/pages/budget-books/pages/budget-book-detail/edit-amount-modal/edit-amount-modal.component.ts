@@ -68,7 +68,7 @@ export class EditAmountModalComponent implements OnInit, OnDestroy {
     const inputAmount: AmountDto = {
       amountId: this.amount.amountId,
       budgetBookId: this.amount.budgetBookId,
-      creatorUserId: this.userService.userId,
+      creatorUserId: this.amount.creatorUserId,
       amountType: this.amount.amountType,
       description: this.formEditAmount.controls.description.value,
       category: this.amount.category,
