@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActionSheetController, LoadingController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { MacroCategoryDto, AmountTypeDto, CategoryDto } from 'src/app/core/api/stingify/models';
 import { CategoryControllerService, MacroCategoryControllerService } from 'src/app/core/api/stingify/services';
@@ -7,6 +7,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { AmountTypesEnum } from 'src/app/utils/app-constants';
 import { getLastChangeElapsedTime } from 'src/app/utils/date-utils';
 import { getAmountTypeColor } from 'src/app/utils/style-utils';
+import { CreateCategoryModalComponent } from './modals/create-category-modal/create-category-modal.component';
 
 @Component({
   selector: 'app-categories',
@@ -40,7 +41,10 @@ export class CategoriesPage implements OnInit, OnDestroy {
     private categoryControllerService: CategoryControllerService,
     private changeDetectorRef: ChangeDetectorRef,
     private loadingController: LoadingController,
+    private modalController: ModalController,
     private actionSheetCtrl: ActionSheetController,
+    private alertController: AlertController,
+
   ) { }
 
   ngOnInit() {
@@ -118,6 +122,29 @@ export class CategoriesPage implements OnInit, OnDestroy {
 
   }
 
+  public showAlertRestore(category: CategoryDto): void {
+    this.alertController.create({
+      header: "Restore",
+      message: "Are you sure you want to restore.",
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Confirm',
+          handler: () => {
+            this.restoreCategory(category);
+          }
+        }
+      ]
+    }).then(alert => {
+      alert.present();
+    }).catch(reason => {
+      console.log(reason);
+    });
+  }
+
   public showActionsCategory(category: CategoryDto): void {
 
     this.actionSheetCtrl.create({
@@ -158,6 +185,39 @@ export class CategoriesPage implements OnInit, OnDestroy {
 
   }
 
+  public restoreCategory(category: CategoryDto): void {
+    const inputCategoryToRestore: CategoryDto = {
+      amountType: category.amountType,
+      cancellationTimestamp: null,
+      categoryId: category.categoryId,
+      changeTimestamp: category.changeTimestamp,
+      creatorUserId: category.creatorUserId,
+      description: category.description,
+      insertionTimestamp: category.insertionTimestamp,
+      macroCategory: category.macroCategory
+    }
+    this.presentLoadingWithOptions().then(spinner => {
+      this.subscriptions.push(
+        this.categoryControllerService.updateCategory({
+          body: inputCategoryToRestore
+        }).subscribe(
+          res => {
+            this.getCategoriesWithSpinner();
+            spinner.dismiss();
+          },
+          err => {
+            this.changeDetectorRef.markForCheck();
+            spinner.dismiss();
+          }
+        )
+      );
+
+    })
+      .catch(reason => {
+        console.log(reason);
+      });
+  }
+
   public addButtonClicked(): void {
 
     if (this.selectedSegment === this.CATEGORIES) {
@@ -173,17 +233,32 @@ export class CategoriesPage implements OnInit, OnDestroy {
   }
 
   public openModalCreateCategory(): void {
-
+    this.modalController.create({
+      component: CreateCategoryModalComponent,
+      canDismiss: true,
+    })
+      .then(modal => {
+        modal.present();
+        modal.onDidDismiss().then(res => {
+          this.getCategoriesWithSpinner();
+        })
+          .catch(reason => {
+            console.log(reason);
+          })
+      })
+      .catch(reason => {
+        console.log(reason);
+      });
   }
 
   public reloadData(event?): void {
     if (this.selectedSegment === this.CATEGORIES) {
-      this.getCategories(event);event
+      this.getCategories(event); event
     } else if (this.selectedSegment === this.MACRO_CATEGORIES) {
       this.getMacroCategories(event);
     }
   }
-  
+
   public loadData(): void {
     if (this.selectedSegment === this.CATEGORIES) {
       if (this.categories.length === 0) {

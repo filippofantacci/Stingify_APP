@@ -15,7 +15,7 @@
   </ion-refresher>
 
   <ng-container *ngIf="showCategories">
-    <ion-card *ngFor="let category of categories" [class]="getCategoryCardClass(category)" >
+    <ion-card *ngFor="let category of categories" [class]="getCategoryCardClass(category)">
       <ion-card-header>
         <ion-card-title [ngClass]="category.cancellationTimestamp ? 'cancelled-text' : ''">
           {{category.description}}
@@ -23,14 +23,19 @@
       </ion-card-header>
       <ion-card-content>
         <p>
-          Macro Category: 
-          <b>
-            <ng-container *ngIf="category.macroCategory">{{category.macroCategory.description}}</ng-container>
-            <ng-container *ngIf="!category.macroCategory">none</ng-container>
-          </b>
+          Macro Category:
+          <ng-container *ngIf="category.macroCategory">
+            <b>{{category.macroCategory.description}}</b>
+          </ng-container>
+
+          <ng-container *ngIf="!category.macroCategory">
+            <b>none</b>
+            <p><ion-text color="warning"><ion-icon name="warning"></ion-icon></ion-text>Add to a Macro Category if you want to use it.</p>
+          </ng-container>
+
         </p>
         <p>
-          Amount Type: 
+          Amount Type:
           <b>
             {{category.amountType.description}}
           </b>
@@ -42,8 +47,11 @@
             <ion-col size="auto" class="ion-text-center">
               <div>{{getLastChangeElapsedTime(category)}} ago</div>
             </ion-col>
-            <ion-col size="auto" class="ion-text-center">
+            <ion-col size="auto" class="ion-text-center" *ngIf="!category.cancellationTimestamp">
               <ion-icon name="ellipsis-horizontal-outline" (click)="showActionsCategory(category)"></ion-icon>
+            </ion-col>
+            <ion-col size="auto" class="ion-text-center" *ngIf="category.cancellationTimestamp">
+              <ion-icon name="arrow-undo-outline" (click)="showAlertRestore(category)"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-grid>

@@ -1,0 +1,62 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Create Category</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close(false)" color="primary">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen *ngIf="ready">
+
+  <form [formGroup]="formCreateCategory">
+
+    <ion-list>
+      <!-- amountType -->
+      <ion-item>
+        <ion-label>AmountType: </ion-label>
+        <ion-select formControlName="amountType" interface="popover">
+          <ion-select-option *ngFor="let amountType of amountTypes" [value]="amountType">
+            {{amountType.description}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <!-- description -->
+      <ion-item>
+        <ion-label>Description: </ion-label>
+        <ion-input formControlName="description" class="ion-text-right"></ion-input>
+      </ion-item>
+      <!-- category -->
+      <ion-item>
+        <ion-label>Macro Category: </ion-label>
+        <ion-select formControlName="macroCategory" interface="popover" placeholder="Select">
+          <ion-select-option *ngFor="let macroCategory of macroCategories" [value]="macroCategory">
+            {{macroCategory.description}}
+          </ion-select-option>
+        </ion-select>
+
+      </ion-item>
+    </ion-list>
+
+  </form>
+    
+  </ion-content>
+  <ion-footer>
+    <ion-grid>
+      <ion-row class="ion-justify-content-between">
+        
+        <ion-col>
+          <ion-button (click)="onSubmit()" [disabled]="!formCreateCategory.valid" expand="block" color="primary">
+            <ion-icon slot="start" icon="save-outline" class="component-icon"></ion-icon>
+            Save
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="close(true)" expand="block" color="secondary" fill="outline">
+            <ion-icon slot="start" icon="arrow-undo-outline" class="component-icon"></ion-icon>
+            Cancel
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      
+    </ion-grid>
+  </ion-footer>

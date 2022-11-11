@@ -4,7 +4,7 @@ import { ActionSheetController, AlertController, LoadingController, ModalControl
 import { forkJoin, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AmountDto, AmountTypeDto, BudgetBookDto, MacroCategoryDto } from 'src/app/core/api/stingify/models';
-import { AmountsControllerService, BudgetBookControllerService, MacroCategoryControllerService } from 'src/app/core/api/stingify/services';
+import { AmountsControllerService, AmountTypeControllerService, BudgetBookControllerService, MacroCategoryControllerService } from 'src/app/core/api/stingify/services';
 import { AmountTypesEnum } from 'src/app/utils/app-constants';
 import { AddAmountModalComponent } from './add-amount-modal/add-amount-modal.component';
 import { getAmountTypeColor } from 'src/app/utils/style-utils';
@@ -29,6 +29,7 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
 
   public budgetBook: BudgetBookDto;
   public macroCategories: MacroCategoryDto[] = [];
+  public amountTypes: AmountTypeDto[] = [];
   public amounts: AmountDto[] = [];
 
   constructor(
@@ -37,6 +38,7 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
     private macroCategoryControllerService: MacroCategoryControllerService,
     private budgetBookControllerService: BudgetBookControllerService,
     private amountsControllerService: AmountsControllerService,
+    private amountTypeControllerService: AmountTypeControllerService,
     private changeDetectorRef: ChangeDetectorRef,
     private loadingController: LoadingController,
     private modalController: ModalController,
@@ -76,6 +78,7 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
       componentProps: {
         amountType: amountTypeDto,
         macroCategories: this.macroCategories,
+        amountTypes: this.amountTypes,
         budgetBookId: this.budgetBook.budgetBookId
       }
     })
@@ -248,13 +251,14 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
             page: this.nextPageAmounts,
             size: this.AMOUNTS_SIZE,
             budgetBookId: this.budgetBookId
-          })
+          }),
+          this.amountTypeControllerService.getAllAmountType()
         ]).pipe(
-          map(([budgetbook, macroCategories, pagedAmounts]) => {
+          map(([budgetbook, macroCategories, pagedAmounts, amountTypes]) => {
 
             this.budgetBook = budgetbook;
             this.macroCategories = macroCategories;
-
+            this.amountTypes = amountTypes;
             this.totalAmounts = pagedAmounts.totalElements
             this.amounts = pagedAmounts.content;
             this.nextPageAmounts++;

@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { AmountDto, AmountTypeDto, CategoryDto, MacroCategoryDto } from 'src/app/core/api/stingify/models';
 import { AmountsControllerService } from 'src/app/core/api/stingify/services';
 import { UserService } from 'src/app/core/services/user.service';
-import { AmountTypesEnum } from 'src/app/utils/app-constants';
 import { formatDateYYYYMMdd } from 'src/app/utils/date-utils';
 
 @Component({
@@ -21,6 +20,7 @@ export class AddAmountModalComponent implements OnInit, OnDestroy {
   @Input() amountType: AmountTypeDto;
   @Input() budgetBookId: number;
   @Input() macroCategories: MacroCategoryDto[];
+  @Input() amountTypes: AmountTypeDto[];
   
   public macroCategeoryFormControl: FormControl = new FormControl();
   public macroCategoriesOptions: MacroCategoryDto[] = [];
@@ -33,12 +33,6 @@ export class AddAmountModalComponent implements OnInit, OnDestroy {
   public formAddAmount: FormGroup;
 
   public date: Date;
-
-  public amountTypes: AmountTypeDto[] = [
-    { amountTypeId: 1, description: AmountTypesEnum[1] },
-    { amountTypeId: 2, description: AmountTypesEnum[2] },
-    { amountTypeId: 3, description: AmountTypesEnum[3] }
-  ];
 
   constructor(
     private userService: UserService,
