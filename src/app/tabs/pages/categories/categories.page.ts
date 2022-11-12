@@ -7,8 +7,10 @@ import { UserService } from 'src/app/core/services/user.service';
 import { AmountTypesEnum } from 'src/app/utils/app-constants';
 import { getLastChangeElapsedTime } from 'src/app/utils/date-utils';
 import { getAmountTypeColor } from 'src/app/utils/style-utils';
-import { CreateCategoryModalComponent } from './modals/create-category-modal/create-category-modal.component';
-import { EditCategoryModalComponent } from './modals/edit-category-modal/edit-category-modal.component';
+import { CreateCategoryModalComponent } from './modals/category/create-category-modal/create-category-modal.component';
+import { EditCategoryModalComponent } from './modals/category/edit-category-modal/edit-category-modal.component';
+import { CreateMacroCategoryComponent } from './modals/macro-category/create-macro-category/create-macro-category.component';
+import { EditMacroCategoryComponent } from './modals/macro-category/edit-macro-category/edit-macro-category.component';
 
 @Component({
   selector: 'app-categories',
@@ -65,8 +67,8 @@ export class CategoriesPage implements OnInit, OnDestroy {
     return getAmountTypeColor(amountType);
   }
 
-  public getLastChangeElapsedTime(macroCategory: MacroCategoryDto): string {
-    const lastChangeDay = new Date(macroCategory.changeTimestamp ? macroCategory.changeTimestamp : macroCategory.insertionTimestamp);
+  public getLastChangeElapsedTime(element: MacroCategoryDto | CategoryDto): string {
+    const lastChangeDay = new Date(element.changeTimestamp ? element.changeTimestamp : element.insertionTimestamp);
     return getLastChangeElapsedTime(lastChangeDay);
   }
 
@@ -75,12 +77,52 @@ export class CategoriesPage implements OnInit, OnDestroy {
 
   }
 
-  public onCategoryClicked(categoryClicked: CategoryDto): void {
-    // if (this.isSelected(categoryClicked)) {
-    //   this.removeFromSelected(categoryClicked);
-    // } else {
-    //   this.addToSelected(categoryClicked);
-    // }
+  
+  public showAlertRestoreMacroCategory(macroCategory: MacroCategoryDto): void {
+    this.alertController.create({
+      header: "Restore",
+      message: "Are you sure you want to restore.",
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Confirm',
+          handler: () => {
+            this.restoreMacroCategory(macroCategory);
+            
+          }
+        }
+      ]
+    }).then(alert => {
+      alert.present();
+    }).catch(reason => {
+      console.log(reason);
+    });
+  }
+
+  public showAlertDeleteMacroCategory(macroCategory: MacroCategoryDto): void {
+    this.alertController.create({
+      header: "Alert",
+      message: "Are you sure you want to delete " + macroCategory.description + ".",
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Confirm',
+          handler: () => {
+            this.deleteMacroCategory(macroCategory);
+          }
+        }
+      ]
+    }).then(alert => {
+      alert.present();
+    }).catch(reason => {
+      console.log(reason);
+    });
   }
 
   public showActionsMacroCategory(macroCategory: MacroCategoryDto): void {
@@ -93,23 +135,23 @@ export class CategoriesPage implements OnInit, OnDestroy {
           role: 'destructive',
           icon: 'trash',
           handler: () => {
-            // this.showAlertDeleteAmount(amount);
+            this.showAlertDeleteMacroCategory(macroCategory);
           }
         },
         {
           text: 'Edit Macro Category',
           icon: 'create',
           handler: () => {
-            // this.openEditAmountmodal(amount);
+            this.openEditMacroCategoryModal(macroCategory);
           }
         },
-        {
-          text: 'Add Category',
-          icon: 'add',
-          handler: () => {
-            // this.openEditAmountmodal(amount);
-          }
-        },
+        // {
+        //   text: 'Add Category',
+        //   icon: 'add',
+        //   handler: () => {
+        //     // this.openEditAmountmodal(amount);
+        //   }
+        // },
         {
           text: 'Cancel',
           role: 'cancel',
@@ -123,7 +165,62 @@ export class CategoriesPage implements OnInit, OnDestroy {
 
   }
 
-  public showAlertRestore(category: CategoryDto): void {
+  public restoreMacroCategory(macroCategory: MacroCategoryDto): void {
+    const inputMacroCategoryToRestore: MacroCategoryDto = {
+      cancellationTimestamp: null,
+      macroCategoryId: macroCategory.macroCategoryId,
+      changeTimestamp: macroCategory.changeTimestamp,
+      creatorUserId: macroCategory.creatorUserId,
+      description: macroCategory.description,
+      insertionTimestamp: macroCategory.insertionTimestamp,
+    }
+    this.presentLoadingWithOptions().then(spinner => {
+      this.subscriptions.push(
+        this.macroCategoryControllerService.updateMacroCategory({
+          body: inputMacroCategoryToRestore
+        }).subscribe(
+          res => {
+            this.getMacroCategoriesWithSpinner();
+            spinner.dismiss();
+          },
+          err => {
+            this.changeDetectorRef.markForCheck();
+            spinner.dismiss();
+          }
+        )
+      );
+
+    })
+      .catch(reason => {
+        console.log(reason);
+      });
+  }
+
+  public deleteMacroCategory(macroCategory: MacroCategoryDto): void {
+
+    this.presentLoadingWithOptions().then(spinner => {
+      this.subscriptions.push(
+        this.macroCategoryControllerService.deleteMacroCategory({
+          body: macroCategory
+        }).subscribe(
+          res => {
+            this.getMacroCategoriesWithSpinner();
+            spinner.dismiss();
+          },
+          err => {
+            this.changeDetectorRef.markForCheck();
+            spinner.dismiss();
+          }
+        )
+      );
+
+    })
+      .catch(reason => {
+        console.log(reason);
+      });
+  }
+
+  public showAlertRestoreCategory(category: CategoryDto): void {
     this.alertController.create({
       header: "Restore",
       message: "Are you sure you want to restore.",
@@ -278,7 +375,44 @@ export class CategoriesPage implements OnInit, OnDestroy {
   }
 
   public openModalCreateMacroCategory(): void {
+    this.modalController.create({
+      component: CreateMacroCategoryComponent,
+      canDismiss: true
+    })
+      .then(modal => {
+        modal.present();
+        modal.onDidDismiss().then(res => {
+          this.getMacroCategoriesWithSpinner();
+        })
+          .catch(reason => {
+            console.log(reason);
+          })
+      })
+      .catch(reason => {
+        console.log(reason);
+      });
+  }
 
+  public openEditMacroCategoryModal(macroCategory: MacroCategoryDto): void {
+    this.modalController.create({
+      component: EditMacroCategoryComponent,
+      canDismiss: true,
+      componentProps: {
+        macroCategory: macroCategory
+      }
+    })
+      .then(modal => {
+        modal.present();
+        modal.onDidDismiss().then(res => {
+          this.getMacroCategoriesWithSpinner();
+        })
+          .catch(reason => {
+            console.log(reason);
+          })
+      })
+      .catch(reason => {
+        console.log(reason);
+      });
   }
 
   public openModalCreateCategory(): void {
@@ -388,7 +522,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
   public getCategories(event?): void {
     this.subscriptions.push(
       this.categoryControllerService.getCategoriesByUserId({
-        userId: this.userService.userId
+        userId: this.userService.userId, unused: false
       }).subscribe(
         res => {
           this.categories = res;
@@ -409,7 +543,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
 
       this.subscriptions.push(
         this.categoryControllerService.getCategoriesByUserId({
-          userId: this.userService.userId
+          userId: this.userService.userId, unused: false
         }).subscribe(
           res => {
             this.categories = res;

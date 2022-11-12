@@ -1,0 +1,84 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Create Macro Category</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close(false)" color="primary">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen *ngIf="ready">
+
+  <form [formGroup]="formCreateMacroCategory">
+
+    <ion-list>
+
+      <!-- description -->
+      <ion-item>
+        <ion-label>Description: </ion-label>
+        <ion-input formControlName="description" class="ion-text-right"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label>Categories: </ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="categories.length > 0">
+
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col size="12">
+              <!-- chips of the unused categories -->
+              <ion-chip *ngFor="let category of categories" [color]="getColor(category.amountType)"
+                [outline]="!isSelected(category)" (click)="onCategoryClicked(category)">
+                {{category.description}}
+                <ion-icon *ngIf="!isSelected(category)" name="add"></ion-icon>
+                <ion-icon *ngIf="isSelected(category)" name="close"></ion-icon>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-item>
+      <ion-item *ngIf="categories.length === 0">
+
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text>
+                no categories available
+              </ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-button (click)="openModalCreateCategory()" expand="block" color="primary" fill="outline">
+                create new category 
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-item>
+    </ion-list>
+
+  </form>
+    
+  </ion-content>
+  <ion-footer>
+    <ion-grid>
+      <ion-row class="ion-justify-content-between">
+        
+        <ion-col>
+          <ion-button (click)="onSubmit()" [disabled]="!formCreateMacroCategory.valid" expand="block" color="primary">
+            <ion-icon slot="start" icon="save-outline" class="component-icon"></ion-icon>
+            Save
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="close(true)" expand="block" color="secondary" fill="outline">
+            <ion-icon slot="start" icon="arrow-undo-outline" class="component-icon"></ion-icon>
+            Cancel
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      
+    </ion-grid>
+  </ion-footer>

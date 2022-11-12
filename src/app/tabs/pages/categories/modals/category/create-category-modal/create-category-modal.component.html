@@ -26,14 +26,13 @@
         <ion-input formControlName="description" class="ion-text-right"></ion-input>
       </ion-item>
       <!-- category -->
-      <ion-item>
+      <ion-item *ngIf="disableMacroCategorySelection === false">
         <ion-label>Macro Category: </ion-label>
         <ion-select formControlName="macroCategory" interface="popover" placeholder="Select">
           <ion-select-option *ngFor="let macroCategory of macroCategories" [value]="macroCategory">
             {{macroCategory.description}}
           </ion-select-option>
         </ion-select>
-
       </ion-item>
     </ion-list>
 

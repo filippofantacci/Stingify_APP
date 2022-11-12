@@ -637,6 +637,11 @@ paths:
         schema:
           type: integer
           format: int32
+      - name: unused
+        in: query
+        required: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: OK
@@ -975,12 +980,12 @@ components:
         numberOfElements:
           type: integer
           format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
         first:
           type: boolean
         last:
           type: boolean
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
         empty:
           type: boolean
     PageableObject:
@@ -989,10 +994,6 @@ components:
         offset:
           type: integer
           format: int64
-        paged:
-          type: boolean
-        unpaged:
-          type: boolean
         sort:
           $ref: '#/components/schemas/Sort'
         pageNumber:
@@ -1001,14 +1002,18 @@ components:
         pageSize:
           type: integer
           format: int32
+        unpaged:
+          type: boolean
+        paged:
+          type: boolean
     Sort:
       type: object
       properties:
-        unsorted:
-          type: boolean
         empty:
           type: boolean
         sorted:
+          type: boolean
+        unsorted:
           type: boolean
     PageAmountDTO:
       type: object
@@ -1034,11 +1039,11 @@ components:
         numberOfElements:
           type: integer
           format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
         first:
           type: boolean
         last:
           type: boolean
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
         empty:
           type: boolean

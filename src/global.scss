@@ -92,3 +92,8 @@
       border-top: 2px solid var(--ion-color-primary);
     }
   }
+
+  /* unclickable chips */
+  ion-chip.unclickable {
+    pointer-events: none;
+  }

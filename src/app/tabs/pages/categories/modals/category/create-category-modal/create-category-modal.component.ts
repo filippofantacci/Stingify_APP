@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { forkJoin, Subscription } from 'rxjs';
@@ -17,6 +17,8 @@ import { NO_MACRO_CATEGORY } from 'src/app/utils/app-constants';
 export class CreateCategoryModalComponent implements OnInit, OnDestroy {
 
   private subscriptions: Array<Subscription> = new Array<Subscription>();
+
+  @Input() disableMacroCategorySelection: boolean = false;
 
   public macroCategories: MacroCategoryDto[] = [];
   public amountTypes: AmountTypeDto[] = [];

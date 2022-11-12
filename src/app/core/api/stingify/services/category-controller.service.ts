@@ -262,11 +262,13 @@ export class CategoryControllerService extends BaseService {
    */
   getCategoriesByUserId$Response(params: {
     userId: number;
+    unused: boolean;
   }): Observable<StrictHttpResponse<Array<CategoryDto>>> {
 
     const rb = new RequestBuilder(this.rootUrl, CategoryControllerService.GetCategoriesByUserIdPath, 'get');
     if (params) {
       rb.path('userId', params.userId, {});
+      rb.query('unused', params.unused, {});
     }
 
     return this.http.request(rb.build({
@@ -288,6 +290,7 @@ export class CategoryControllerService extends BaseService {
    */
   getCategoriesByUserId(params: {
     userId: number;
+    unused: boolean;
   }): Observable<Array<CategoryDto>> {
 
     return this.getCategoriesByUserId$Response(params).pipe(
