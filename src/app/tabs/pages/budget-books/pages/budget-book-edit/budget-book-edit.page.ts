@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { forkJoin, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BudgetBookDto, MacroCategoryDto } from 'src/app/core/api/stingify/models';
+import { AmountTypeDto, BudgetBookDto, CategoryDto, MacroCategoryDto } from 'src/app/core/api/stingify/models';
 import { BudgetBookControllerService, MacroCategoryControllerService } from 'src/app/core/api/stingify/services';
 import { UserService } from 'src/app/core/services/user.service';
+import { getAmountTypeColor } from 'src/app/utils/style-utils';
 
 @Component({
   selector: 'app-budget-book-edit',
@@ -24,8 +25,12 @@ export class BudgetBookEditPage implements OnInit, OnDestroy {
   public ready: boolean = false;
 
   public budgetBook: BudgetBookDto;
-  public budgetBookMacroCategories: MacroCategoryDto[] = [];
+  public budgetBookCategories: CategoryDto[] = [];
   public userMacroCategories: MacroCategoryDto[] = [];
+  public macroCategories: MacroCategoryDto[] = [];
+
+  public selectedCategories: CategoryDto[] = [];
+
 
   public formEditBudgetBook: FormGroup;
 
@@ -47,13 +52,44 @@ export class BudgetBookEditPage implements OnInit, OnDestroy {
 
     this.formEditBudgetBook = this.fb.group({
       description: ['', [Validators.required, Validators.maxLength(255)]],
-      categories:[[]]
+      categories: [[]]
     });
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
+
+
+  public getColor(amountType: AmountTypeDto): string {
+    return getAmountTypeColor(amountType);
+  }
+
+  public isSelected(category: CategoryDto): boolean {
+    return this.selectedCategories.filter(selectedCategory => selectedCategory.categoryId === category.categoryId).length > 0;
+  }
+
+  public onCategoryClicked(categoryClicked: CategoryDto): void {
+    if (this.isSelected(categoryClicked)) {
+      this.removeFromSelected(categoryClicked);
+    } else {
+      this.addToSelected(categoryClicked);
+    }
+  }
+
+  public addToSelected(categoryToAdd): void {
+    this.selectedCategories.push(categoryToAdd);
+    this.formEditBudgetBook.controls.categories.setValue(this.selectedCategories);
+    this.changeDetectorRef.markForCheck();
+  }
+
+  public removeFromSelected(categoryToRemove): void {
+    this.selectedCategories = this.selectedCategories.filter(selectedCategory => selectedCategory.categoryId !== categoryToRemove.categoryId);
+    this.formEditBudgetBook.controls.categories.setValue(this.selectedCategories);
+    this.changeDetectorRef.markForCheck();
+  }
+
+
 
   public navigateBack(): void {
     const url = this.backUrl ? this.backUrl.split('?')[0] : this.defaultBackUrl;
@@ -69,19 +105,20 @@ export class BudgetBookEditPage implements OnInit, OnDestroy {
       this.subscriptions.push(
         forkJoin([
           this.budgetBookControllerService.getBudgetBookById({ budgetBookId: budgetBookId }),
-          this.macroCategoryControllerService.getMacroCategoriesByBudgetBookId({ budgetBookId: budgetBookId }),
+          this.budgetBookControllerService.getAllBudgetBooksCategories({ budgetBookId: budgetBookId }),
           this.macroCategoryControllerService.getMacroCategoriesByUserId({ userId: this.userService.userId })
         ]).pipe(
-          map(([budgetbook, budgetBookMacroCategories, userMacroCategories]) => {
+          map(([budgetbook, budgetBookCategories, userMacroCategories]) => {
 
             this.budgetBook = budgetbook;
-            this.budgetBookMacroCategories = budgetBookMacroCategories;
+            this.budgetBookCategories = budgetBookCategories;
             this.userMacroCategories = userMacroCategories;
 
+            this.selectedCategories = this.budgetBookCategories;
+            this.macroCategories = this.userMacroCategories;
+
             this.formEditBudgetBook.controls.description.setValue(this.budgetBook.description);
-            this.formEditBudgetBook.controls.categories.setValue(this.budgetBookMacroCategories);
-            // this.formEditBudgetBook.controls.
-            // this.formEditBudgetBook.controls.
+            this.formEditBudgetBook.controls.categories.setValue(this.selectedCategories);
 
             this.ready = true;
             this.changeDetectorRef.markForCheck();
