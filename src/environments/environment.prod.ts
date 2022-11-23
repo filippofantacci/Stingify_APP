@@ -3,7 +3,7 @@ import { menu } from "src/app/utils/menu";
 export const environment = {
   production: true,
   keycloak: {
-    url: 'http://keycloak:8080/auth',
+    url: 'http://3.238.217.123:8080/auth',
     realm: 'Stingify',
     clientId: 'stingify_app',
     initOptions: {
