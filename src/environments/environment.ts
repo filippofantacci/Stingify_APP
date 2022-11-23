@@ -6,7 +6,7 @@ import { menu } from "src/app/utils/menu";
 export const environment = {
   production: false,
   keycloak: {
-    url: 'http://localhost:8080/auth',
+    url: 'http://keycloak:8080/auth',
     realm: 'Stingify',
     clientId: 'stingify_app',
     initOptions: {
