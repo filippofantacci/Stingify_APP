@@ -4,7 +4,7 @@ COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm run build -- --configuration production
-EXPOSE 4200
+EXPOSE 80
 
 FROM nginx:1.23.2-alpine 
 COPY nginx.conf /etc/nginx/nginx.conf
