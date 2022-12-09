@@ -878,6 +878,15 @@ components:
         cancellationTimestamp:
           type: string
           format: date-time
+        expenses:
+          type: number
+          format: float
+        incomings:
+          type: number
+          format: float
+        savings:
+          type: number
+          format: float
     AmountDTO:
       type: object
       properties:
@@ -959,12 +968,12 @@ components:
     PageBudgetBookDTO:
       type: object
       properties:
-        totalElements:
-          type: integer
-          format: int64
         totalPages:
           type: integer
           format: int32
+        totalElements:
+          type: integer
+          format: int64
         size:
           type: integer
           format: int32
@@ -996,16 +1005,16 @@ components:
           format: int64
         sort:
           $ref: '#/components/schemas/Sort'
+        unpaged:
+          type: boolean
+        paged:
+          type: boolean
         pageNumber:
           type: integer
           format: int32
         pageSize:
           type: integer
           format: int32
-        unpaged:
-          type: boolean
-        paged:
-          type: boolean
     Sort:
       type: object
       properties:
@@ -1018,12 +1027,12 @@ components:
     PageAmountDTO:
       type: object
       properties:
-        totalElements:
-          type: integer
-          format: int64
         totalPages:
           type: integer
           format: int32
+        totalElements:
+          type: integer
+          format: int64
         size:
           type: integer
           format: int32

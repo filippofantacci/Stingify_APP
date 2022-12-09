@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ActionSheetController, AlertController, LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { BudgetBookDto } from 'src/app/core/api/stingify/models';
 import { BudgetBookControllerService } from 'src/app/core/api/stingify/services';
 import { UserService } from 'src/app/core/services/user.service';
+import { ProgressbarOption } from 'src/app/shared/components/progressbar/progressbar.component';
 import { getLastChangeElapsedTime } from 'src/app/utils/date-utils';
 
 @Component({
@@ -53,41 +54,41 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
 
   public showActions(budgetBook: BudgetBookDto): void {
 
-      this.actionSheetCtrl.create({
-        header: budgetBook.description,
-        buttons: [
-          {
-            text: 'Delete',
-            role: 'destructive',
-            icon: 'trash',
-            handler: () => {
-              this.showAlertDeleteBudgetBook(budgetBook);
-            }
-          },
-          {
-            text: 'Edit',
-            icon: 'create',
-            handler: () => {
-              this.navigateToBudgetBookEdit(budgetBook);
-            }
-          },
-          {
-            text: 'Cancel',
-            role: 'cancel',
-          },
-        ],
-      }).then(actionSheet => {
-        actionSheet.present();
-      }).catch(reason => {
-        console.log(reason);
-      });
-  
+    this.actionSheetCtrl.create({
+      header: budgetBook.description,
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.showAlertDeleteBudgetBook(budgetBook);
+          }
+        },
+        {
+          text: 'Edit',
+          icon: 'create',
+          handler: () => {
+            this.navigateToBudgetBookEdit(budgetBook);
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    }).then(actionSheet => {
+      actionSheet.present();
+    }).catch(reason => {
+      console.log(reason);
+    });
+
   }
 
   private showAlertDeleteBudgetBook(budgetBook: BudgetBookDto): void {
     this.alertController.create({
       header: "Alert",
-      message: "Deleting the budget book " + budgetBook.description + ", all the related informations such as amounts and acategories will be lost." ,
+      message: "Deleting the budget book " + budgetBook.description + ", all the related informations such as amounts and acategories will be lost.",
       buttons: [
         {
           text: 'Cancel',
@@ -104,12 +105,12 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
       alert.present();
     }).catch(reason => {
       console.log(reason);
-    });  
+    });
   }
-  
+
   private deleteBudgetBook(budgetBook: BudgetBookDto): void {
-    
-    this.budgetBookControllerService.deleteBudgetBook({body: budgetBook}).subscribe(
+
+    this.budgetBookControllerService.deleteBudgetBook({ body: budgetBook }).subscribe(
       res => {
         this.nextPageBudgetBooks = 0;
         this.getBudgetBooksWithSpinner();
@@ -120,6 +121,38 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
   public getLastChangeElapsedTime(budgetBook: BudgetBookDto): string {
     const lastChangeDay = new Date(budgetBook.changeTimestamp ? budgetBook.changeTimestamp : budgetBook.insertionTimestamp);
     return getLastChangeElapsedTime(lastChangeDay);
+  }
+
+  public getProgressbarOption(budgetBook: BudgetBookDto): ProgressbarOption {
+    return {
+      sections: [
+        {
+          label: 'Incomings',
+          value: budgetBook.incomings,
+          color: 'var(--ion-color-success)',
+        },
+        {
+          label: 'Savings',
+          value: budgetBook.savings,
+          color: 'var(--ion-color-primary)',
+        },
+        {
+          label: 'Expenses',
+          value: budgetBook.expenses,
+          color: 'var(--ion-color-danger)',
+        }
+      ],
+      showPercentage: false,
+      showLabels: false
+    }
+  }
+
+  public getBalance(budgetBook: BudgetBookDto): number {
+    return budgetBook.incomings - budgetBook.expenses - budgetBook.savings;
+  }
+
+  public getRealSaving(budgetBook: BudgetBookDto): number {
+    return budgetBook.savings + budgetBook.incomings - budgetBook.expenses;
   }
 
   ngOnDestroy() {

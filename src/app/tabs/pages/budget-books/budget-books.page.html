@@ -9,6 +9,9 @@
     <ion-card-header (click)="navigateToBudgetBook(budgetBook)">
       <ion-card-title>{{budgetBook.description}}</ion-card-title>
     </ion-card-header>
+    <ion-card-content>
+      <app-progressbar [progressbarOption]="getProgressbarOption(budgetBook)"></app-progressbar>
+    </ion-card-content>
     <ion-footer>
       <ion-grid>
         <ion-row class="ion-justify-content-between">

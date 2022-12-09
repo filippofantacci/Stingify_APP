@@ -8,5 +8,8 @@ export interface BudgetBookDto {
   changeTimestamp?: string;
   creatorUserId?: number;
   description?: string;
+  expenses?: number;
+  incomings?: number;
   insertionTimestamp?: string;
+  savings?: number;
 }
