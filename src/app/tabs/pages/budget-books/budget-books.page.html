@@ -11,6 +11,8 @@
     </ion-card-header>
     <ion-card-content>
       <app-progressbar [progressbarOption]="getProgressbarOption(budgetBook)"></app-progressbar>
+      <p>balance: {{getBalance(budgetBook)}}€</p>
+      <p>real saving: {{getRealSaving(budgetBook)}}€</p>
     </ion-card-content>
     <ion-footer>
       <ion-grid>
