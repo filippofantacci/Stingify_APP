@@ -4,13 +4,13 @@ import { Subscription } from 'rxjs';
 import { MacroCategoryDto, AmountTypeDto, CategoryDto } from 'src/app/core/api/stingify/models';
 import { CategoryControllerService, MacroCategoryControllerService } from 'src/app/core/api/stingify/services';
 import { UserService } from 'src/app/core/services/user.service';
-import { AmountTypesEnum } from 'src/app/utils/app-constants';
 import { getLastChangeElapsedTime } from 'src/app/utils/date-utils';
 import { getAmountTypeColor } from 'src/app/utils/style-utils';
 import { CreateCategoryModalComponent } from './modals/category/create-category-modal/create-category-modal.component';
 import { EditCategoryModalComponent } from './modals/category/edit-category-modal/edit-category-modal.component';
 import { CreateMacroCategoryComponent } from './modals/macro-category/create-macro-category/create-macro-category.component';
 import { EditMacroCategoryComponent } from './modals/macro-category/edit-macro-category/edit-macro-category.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-categories',
@@ -47,7 +47,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
     private modalController: ModalController,
     private actionSheetCtrl: ActionSheetController,
     private alertController: AlertController,
-
+    private translateService: TranslateService
   ) { }
 
   ngOnInit() {
@@ -69,7 +69,8 @@ export class CategoriesPage implements OnInit, OnDestroy {
 
   public getLastChangeElapsedTime(element: MacroCategoryDto | CategoryDto): string {
     const lastChangeDay = new Date(element.changeTimestamp ? element.changeTimestamp : element.insertionTimestamp);
-    return getLastChangeElapsedTime(lastChangeDay);
+    const elapsedTime = getLastChangeElapsedTime(lastChangeDay);
+    return elapsedTime.time + ' ' + this.translateService.instant('TIME_UNITS.' + elapsedTime.unit)
   }
 
   public getCategoryCardClass(category: CategoryDto): string {
@@ -77,21 +78,21 @@ export class CategoriesPage implements OnInit, OnDestroy {
 
   }
 
-  
+
   public showAlertRestoreMacroCategory(macroCategory: MacroCategoryDto): void {
     this.alertController.create({
-      header: "Restore",
-      message: "Are you sure you want to restore.",
+      header: this.translateService.instant('COMMON.restore'),
+      message: this.translateService.instant('MACRO_CATEGORY.restoreMacroCategoryMessage'),
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translateService.instant('COMMON.cancel'),
           role: 'cancel'
         },
         {
-          text: 'Confirm',
+          text: this.translateService.instant('COMMON.confirm'),
           handler: () => {
             this.restoreMacroCategory(macroCategory);
-            
+
           }
         }
       ]
@@ -104,15 +105,15 @@ export class CategoriesPage implements OnInit, OnDestroy {
 
   public showAlertDeleteMacroCategory(macroCategory: MacroCategoryDto): void {
     this.alertController.create({
-      header: "Alert",
-      message: "Are you sure you want to delete " + macroCategory.description + ".",
+      header: this.translateService.instant('COMMON.alert'),
+      message: this.translateService.instant('MACRO_CATEGORY.deleteMacroCategoryMessage', { macroCategoryDescription: macroCategory.description }),
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translateService.instant('COMMON.cancel'),
           role: 'cancel'
         },
         {
-          text: 'Confirm',
+          text: this.translateService.instant('COMMON.confirm'),
           handler: () => {
             this.deleteMacroCategory(macroCategory);
           }
@@ -131,7 +132,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
       header: macroCategory.description,
       buttons: [
         {
-          text: 'Delete Macro Category',
+          text: this.translateService.instant('MACRO_CATEGORY.deleteMacroCategoryAction'),
           role: 'destructive',
           icon: 'trash',
           handler: () => {
@@ -139,7 +140,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
           }
         },
         {
-          text: 'Edit Macro Category',
+          text: this.translateService.instant('MACRO_CATEGORY.editMacroCategoryAction'),
           icon: 'create',
           handler: () => {
             this.openEditMacroCategoryModal(macroCategory);
@@ -153,7 +154,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
         //   }
         // },
         {
-          text: 'Cancel',
+          text: this.translateService.instant('COMMON.cancel'),
           role: 'cancel',
         },
       ],
@@ -222,15 +223,15 @@ export class CategoriesPage implements OnInit, OnDestroy {
 
   public showAlertRestoreCategory(category: CategoryDto): void {
     this.alertController.create({
-      header: "Restore",
-      message: "Are you sure you want to restore.",
+      header: this.translateService.instant('COMMON.restore'),
+      message: this.translateService.instant('CATEGORY.restoreCategoryMessage'),
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translateService.instant('COMMON.cancel'),
           role: 'cancel'
         },
         {
-          text: 'Confirm',
+          text: this.translateService.instant('COMMON.confirm'),
           handler: () => {
             this.restoreCategory(category);
           }
@@ -245,15 +246,15 @@ export class CategoriesPage implements OnInit, OnDestroy {
 
   public showAlertDeleteCategory(category: CategoryDto): void {
     this.alertController.create({
-      header: "Alert",
-      message: "Are you sure you want to delete " + category.description + ".",
+      header: this.translateService.instant('COMMON.alert'),
+      message: this.translateService.instant('CATEGORY.deleteCategoryMessage', { categoryDescription: category.description}),
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translateService.instant('COMMON.cancel'),
           role: 'cancel'
         },
         {
-          text: 'Confirm',
+          text: this.translateService.instant('COMMON.confirm'),
           handler: () => {
             this.deleteCategory(category);
           }
@@ -272,7 +273,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
       header: category.description,
       buttons: [
         {
-          text: 'Delete Category',
+          text: this.translateService.instant('CATEGORY.deleteCategoryAction'),
           role: 'destructive',
           icon: 'trash',
           handler: () => {
@@ -280,14 +281,14 @@ export class CategoriesPage implements OnInit, OnDestroy {
           }
         },
         {
-          text: 'Edit Category',
+          text: this.translateService.instant('CATEGORY.editCategoryAction'),
           icon: 'create',
           handler: () => {
             this.openEditCategoryModal(category);
           }
         },
         {
-          text: 'Add To Macro Category',
+          text: this.translateService.instant('CATEGORY.addToMacroCategoryAction'),
           icon: 'add',
           handler: () => {
             this.selectedSegment = this.MACRO_CATEGORIES;
@@ -295,7 +296,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
           }
         },
         {
-          text: 'Cancel',
+          text: this.translateService.instant('COMMON.cancel'),
           role: 'cancel',
         },
       ],

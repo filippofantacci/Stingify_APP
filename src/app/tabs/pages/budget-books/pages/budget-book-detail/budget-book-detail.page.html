@@ -3,13 +3,11 @@
     <ion-buttons slot="start">
       <ion-button (click)="navigateToBudgetBooks()">
         <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
-        Back
       </ion-button>
     </ion-buttons>
     <ion-title>{{budgetBook?.description}}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="navigateToBudgetBookEdit()">
-        Edit
         <ion-icon slot="end" name="create-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -30,9 +28,9 @@
     <ion-card-content>
       <ion-grid>
         <ion-row>
-          <ion-col>Date</ion-col>
-          <ion-col>Planned</ion-col>
-          <ion-col>Actual</ion-col>
+          <ion-col>{{'BUDGETBOOK_DETAIL.date' | translate}}</ion-col>
+          <ion-col>{{'BUDGETBOOK_DETAIL.planned' | translate}}</ion-col>
+          <ion-col>{{'BUDGETBOOK_DETAIL.actual' | translate}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
@@ -61,7 +59,7 @@
       <ion-grid>
         <ion-row class="ion-justify-content-between">
           <ion-col size="auto" class="ion-text-center">
-            <div>{{getLastChangeElapsedTime(amount)}} ago</div>
+            <div>{{getLastChangeElapsedTime(amount)}}</div>
           </ion-col>
           <ion-col size="auto" class="ion-text-center">
             <ion-icon name="ellipsis-horizontal-outline" (click)="showActions(amount)"></ion-icon>

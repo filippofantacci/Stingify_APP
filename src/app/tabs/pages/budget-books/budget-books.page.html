@@ -5,20 +5,20 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-card *ngFor="let budgetBook of budgetBooksList">
-    <ion-card-header (click)="navigateToBudgetBook(budgetBook)">
+  <ion-card *ngFor="let budgetBook of budgetBooksList" (click)="navigateToBudgetBook(budgetBook)">
+    <ion-card-header>
       <ion-card-title>{{budgetBook.description}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <app-progressbar [progressbarOption]="getProgressbarOption(budgetBook)"></app-progressbar>
-      <p>balance: {{getBalance(budgetBook)}}€</p>
-      <p>real saving: {{getRealSaving(budgetBook)}}€</p>
+      <p>{{ 'BUDGETBOOKS.balance' | translate }}: {{getBalance(budgetBook)}}€</p>
+      <p>{{ 'BUDGETBOOKS.realSaving' | translate }}: {{getRealSaving(budgetBook)}}€</p>
     </ion-card-content>
     <ion-footer>
       <ion-grid>
         <ion-row class="ion-justify-content-between">
           <ion-col size="auto" class="ion-text-center">
-            <div>{{getLastChangeElapsedTime(budgetBook)}} ago</div>
+            <div>{{getLastChangeElapsedTime(budgetBook)}}</div>
           </ion-col>
           <ion-col size="auto" class="ion-text-center">
             <ion-icon name="ellipsis-horizontal-outline" (click)="showActions(budgetBook)"></ion-icon>

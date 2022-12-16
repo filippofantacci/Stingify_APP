@@ -4,6 +4,7 @@ import { NgModule } from "@angular/core";
 import { CryptoInterceptor } from "./interceptor/crypto.interceptor";
 import { ErrorHandlerInterceptor } from "./interceptor/errohandler.interceptor";
 import { CryptoService } from "./services/crypto.service";
+import { LanguageService } from "./services/language.service";
 import { ToasterService } from "./services/toaster.service";
 import { UserService } from "./services/user.service";
 
@@ -18,6 +19,7 @@ import { UserService } from "./services/user.service";
     CryptoService,
     ToasterService,
     UserService,
+    LanguageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CryptoInterceptor,

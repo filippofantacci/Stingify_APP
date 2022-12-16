@@ -1,11 +1,11 @@
-<app-tab [title]="'Cateories'">
+<app-tab [title]="'Categories'">
 
   <ion-segment [scrollable]="true" (ionChange)="segmentChanged($event)" [value]="selectedSegment">
     <ion-segment-button [value]="CATEGORIES">
-      <ion-label>Categories</ion-label>
+      <ion-label>{{ 'CATEGORY.title' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button [value]="MACRO_CATEGORIES">
-      <ion-label>Macro Categories</ion-label>
+      <ion-label>{{ 'MACRO_CATEGORY.title' | translate}}</ion-label>
     </ion-segment-button>
   </ion-segment>
 
@@ -23,21 +23,21 @@
       </ion-card-header>
       <ion-card-content>
         <p>
-          Macro Category:
+          {{ 'LABELS.macroCategory' | translate}}:
           <ng-container *ngIf="category.macroCategory">
             <b>{{category.macroCategory.description}}</b>
           </ng-container>
 
           <ng-container *ngIf="!category.macroCategory">
-            <b>none</b>
-            <p><ion-text color="warning"><ion-icon name="warning"></ion-icon></ion-text>Add to a Macro Category if you want to use it.</p>
+            <b>{{ 'COMMON.none' | translate}}</b>
+            <p><ion-text color="warning"><ion-icon name="warning"></ion-icon></ion-text>{{ 'CATEGORY.noMacrocategoryMessage' | translate}}</p>
           </ng-container>
 
         </p>
         <p>
-          Amount Type:
+          {{ 'LABELS.amountType' | translate}}:
           <b>
-            {{category.amountType.description}}
+            {{'AMOUNT_TYPES.' + category.amountType.description | translate}}
           </b>
         </p>
       </ion-card-content>
@@ -45,7 +45,7 @@
         <ion-grid>
           <ion-row class="ion-justify-content-between">
             <ion-col size="auto" class="ion-text-center">
-              <div>{{getLastChangeElapsedTime(category)}} ago</div>
+              <div>{{getLastChangeElapsedTime(category)}}</div>
             </ion-col>
             <ion-col size="auto" class="ion-text-center" *ngIf="!category.cancellationTimestamp">
               <ion-icon name="ellipsis-horizontal-outline" (click)="showActionsCategory(category)"></ion-icon>
@@ -77,7 +77,7 @@
         <ion-grid>
           <ion-row class="ion-justify-content-between">
             <ion-col size="auto" class="ion-text-center">
-              <div>{{getLastChangeElapsedTime(macroCategory)}} ago</div>
+              <div>{{getLastChangeElapsedTime(macroCategory)}}</div>
             </ion-col>
             <ion-col size="auto" class="ion-text-center" *ngIf="!macroCategory.cancellationTimestamp">
               <ion-icon name="ellipsis-horizontal-outline" (click)="showActionsMacroCategory(macroCategory)"></ion-icon>

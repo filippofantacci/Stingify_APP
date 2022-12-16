@@ -4,6 +4,7 @@ import { TabComponent } from './layout/tab/tab.component';
 import { IonicModule } from '@ionic/angular';
 import { ThemeChangerComponent } from './components/theme-changer/theme-changer.component';
 import { ProgressbarComponent } from './components/progressbar/progressbar.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -11,6 +12,7 @@ import { ProgressbarComponent } from './components/progressbar/progressbar.compo
   imports: [
     CommonModule,
     IonicModule,
+    TranslateModule,
   ],
   declarations: [
     TabComponent,
@@ -21,6 +23,7 @@ import { ProgressbarComponent } from './components/progressbar/progressbar.compo
     TabComponent,
     ThemeChangerComponent,
     ProgressbarComponent,
+    TranslateModule,
   ]
 })
 export class SharedModule { }

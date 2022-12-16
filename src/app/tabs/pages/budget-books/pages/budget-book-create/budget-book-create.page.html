@@ -3,10 +3,9 @@
     <ion-buttons slot="start">
       <ion-button (click)="navigateToBudgetBooks()">
         <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
-        Back
       </ion-button>
     </ion-buttons>
-    <ion-title>Create Budget Book</ion-title>
+    <ion-title>{{ 'BUDGETBOOK_CREATE.title' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,12 +16,12 @@
     <ion-list>
 
       <ion-item>
-        <ion-label>Description: </ion-label>
+        <ion-label>{{'LABELS.description' | translate}}: </ion-label>
         <ion-input formControlName="description" class="ion-text-right"></ion-input>
       </ion-item>
 
       <ion-item lines="none">
-        <ion-label>Categories: </ion-label>
+        <ion-label>{{'LABELS.categories' | translate}}: </ion-label>
       </ion-item>
 
       <!-- Macro categories -->
@@ -60,13 +59,13 @@
       <ion-col>
         <ion-button (click)="onSubmit()" [disabled]="!formAddBudgetBook.valid" expand="block" color="primary">
           <ion-icon slot="start" icon="save-outline" class="component-icon"></ion-icon>
-          Save
+          {{'COMMON.save' | translate}}
         </ion-button>
       </ion-col>
       <ion-col>
         <ion-button (click)="navigateToBudgetBooks()" expand="block" color="secondary" fill="outline">
           <ion-icon slot="start" icon="arrow-undo-outline" class="component-icon"></ion-icon>
-          Cancel
+          {{'COMMON.cancel' | translate}}
         </ion-button>
       </ion-col>
     </ion-row>

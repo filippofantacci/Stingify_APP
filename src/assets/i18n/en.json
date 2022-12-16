@@ -1,0 +1,89 @@
+{
+    "COMMON": {
+        "back": "Back",
+        "save": "Save",
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "delete": "Delete",
+        "alert": "Alert",
+        "select": "Select",
+        "none": "none",
+        "restore": "Restore",
+        "confirm": "Confirm"
+    },
+    "LABELS": {
+        "description": "Description",
+        "categories": "Categories",
+        "date": "Date",
+        "amountType": "Amount Type",
+        "category": "Category",
+        "macroCategory": "Macro Category"
+    },
+    "TIME_UNITS": {
+        "days": "days",
+        "hours": "hours",
+        "minutes": "minutes",
+        "seconds": "seconds"
+    },
+    "AMOUNT_TYPES": {
+        "incomings": "Incomings",
+        "savings": "Savings",
+        "expenses": "Expenses",
+        "Incoming": "Incoming",
+        "Saving": "Saving",
+        "Expense": "Expense"
+    },
+    "MENU": {
+        "Budget Books": "Budget Books",
+        "Categories": "Categories",
+        "Saving Goals": "Saving Goals",
+        "Reports": "Reports"
+    },
+    "ERROR_PAGE": {
+        "text": "Page not found",
+        "button": "Back to home"
+    },
+    "BUDGETBOOKS": {
+        "balance": "Balance",
+        "realSaving": "Real savingd",
+        "deleteAlertMessage": "Deleting the budget book {{budgetBookDescription}}, all the related informations such as amounts and acategories will be lost.",
+        "deleteButton": "Delete the budget book"
+    },
+    "BUDGETBOOK_EDIT": {
+        "title": "Edit budget book"
+    },
+    "BUDGETBOOK_CREATE": {
+        "title": "Create Budget Book"
+    },
+    "BUDGETBOOK_DETAIL": {
+        "date": "Date",
+        "planned": "Planned",
+        "actual": "Actual",
+        "deleteAlertMessage": "Deleting the amount {{amountDescription}}, the information will be lost.",
+        "deleteButton": "Delete the amount",
+        "editAmountTitle": "Edit Amount",
+        "addAmountTitle": "Add Amount"
+    },
+    "CATEGORY": {
+        "editCategoryTitle": "Edit Category",
+        "createCategoryTitle": "Create Category",
+        "title": "Categories",
+        "noMacrocategoryMessage": "Add to a Macro Category if you want to use it.",
+        "restoreCategoryMessage": "Are you sure you want to restore the Category.",
+        "deleteCategoryAction": "Delete Category",
+        "editCategoryAction": "Edit Category",
+        "addToMacroCategoryAction": "Add to Macro Category",
+        "deleteCategoryMessage": "Are you sure you want to delete {{categoryDescription}}."
+    },
+    "MACRO_CATEGORY": {
+        "editMacroCategoryTitle": "Edit Macro Category",
+        "noCategoryAvaiabile": "No categories available",
+        "newCategoryButton": "Create new category",
+        "createMacroCategoryTitle": "Create Macro Category",
+        "title": "Macro Categories",
+        "restoreMacroCategoryMessage": "Are you sure you want to restore the Macro Category.",
+        "deleteMacroCategoryAction": "Delete Macro Category",
+        "editMacroCategoryAction": "Edit Macro Category",
+        "deleteMacroCategoryMessage": "Are you sure you want to delete {{macroCategoryDescription}}."
+    }
+}

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { BudgetBookCreatePageRoutingModule } from './budget-book-create-routing.module';
 
 import { BudgetBookCreatePage } from './budget-book-create.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { BudgetBookCreatePage } from './budget-book-create.page';
     IonicModule,
     BudgetBookCreatePageRoutingModule,
     ReactiveFormsModule,
+    SharedModule
   ],
   declarations: [BudgetBookCreatePage]
 })

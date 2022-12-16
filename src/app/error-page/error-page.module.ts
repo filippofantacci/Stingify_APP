@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { ErrorPagePageRoutingModule } from './error-page-routing.module';
 
 import { ErrorPagePage } from './error-page.page';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ErrorPagePageRoutingModule
+    ErrorPagePageRoutingModule,
+    TranslateModule
   ],
   declarations: [ErrorPagePage]
 })

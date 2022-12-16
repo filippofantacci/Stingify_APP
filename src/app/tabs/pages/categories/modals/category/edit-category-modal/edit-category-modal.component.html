@@ -1,8 +1,8 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-title>Edit Category</ion-title>
+    <ion-title>{{'CATEGORY.editCategoryTitle' | translate}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="close(false)" color="primary">Cancel</ion-button>
+      <ion-button (click)="close(false)" color="primary">{{'COMMON.cancel' | translate}}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,22 +13,22 @@
     <ion-list>
       <!-- amountType -->
       <ion-item>
-        <ion-label>AmountType: </ion-label>
+        <ion-label>{{'LABELS.amountType' | translate }}: </ion-label>
         <ion-select formControlName="amountType" interface="popover">
           <ion-select-option *ngFor="let amountType of amountTypes" [value]="amountType.amountTypeId">
-            {{amountType.description}}
+            {{'AMOUNT_TYPES.' + amountType.description | translate}}
           </ion-select-option>
         </ion-select>
       </ion-item>
       <!-- description -->
       <ion-item>
-        <ion-label>Description: </ion-label>
+        <ion-label>{{'AMOUNT_TYPES.description' | translate}}: </ion-label>
         <ion-input formControlName="description" class="ion-text-right"></ion-input>
       </ion-item>
       <!-- category -->
       <ion-item>
-        <ion-label>Macro Category: </ion-label>
-        <ion-select formControlName="macroCategory" interface="popover" placeholder="Select">
+        <ion-label>{{'LABELS.macroCategory' | translate }}: </ion-label>
+        <ion-select formControlName="macroCategory" interface="popover" placeholder="{{'COMMON.select' | translate}}">
           <ion-select-option *ngFor="let macroCategory of macroCategories" [value]="macroCategory.macroCategoryId">
             {{macroCategory.description}}
           </ion-select-option>
@@ -47,13 +47,13 @@
         <ion-col>
           <ion-button (click)="onSubmit()" [disabled]="!formEditCategory.valid" expand="block" color="primary">
             <ion-icon slot="start" icon="save-outline" class="component-icon"></ion-icon>
-            Save
+            {{'COMMON.save' | translate }}
           </ion-button>
         </ion-col>
         <ion-col>
           <ion-button (click)="close(true)" expand="block" color="secondary" fill="outline">
             <ion-icon slot="start" icon="arrow-undo-outline" class="component-icon"></ion-icon>
-            Cancel
+            {{'COMMON.cancel' | translate }}
           </ion-button>
         </ion-col>
       </ion-row>

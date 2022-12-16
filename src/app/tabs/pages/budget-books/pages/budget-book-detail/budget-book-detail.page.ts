@@ -10,7 +10,7 @@ import { AddAmountModalComponent } from './add-amount-modal/add-amount-modal.com
 import { getAmountTypeColor } from 'src/app/utils/style-utils';
 import { getLastChangeElapsedTime } from 'src/app/utils/date-utils';
 import { EditAmountModalComponent } from './edit-amount-modal/edit-amount-modal.component';
-
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-budget-book-detail',
@@ -44,6 +44,7 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
     private modalController: ModalController,
     private actionSheetCtrl: ActionSheetController,
     private alertController: AlertController,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit() {
@@ -126,7 +127,7 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
       header: amount.description,
       buttons: [
         {
-          text: 'Delete',
+          text: this.translateService.instant('COMMON.delete'),
           role: 'destructive',
           icon: 'trash',
           handler: () => {
@@ -134,14 +135,14 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
           }
         },
         {
-          text: 'Edit',
+          text: this.translateService.instant('COMMON.edit'),
           icon: 'create',
           handler: () => {
             this.openEditAmountModal(amount);
           }
         },
         {
-          text: 'Cancel',
+          text: this.translateService.instant('COMMON.cancel'),
           role: 'cancel',
         },
       ],
@@ -155,15 +156,15 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
 
   private showAlertDeleteAmount(amount: AmountDto): void {
     this.alertController.create({
-      header: "Alert",
-      message: "Deleting the amount " + amount.description + ", the information will be lost.",
+      header: this.translateService.instant('COMMON.alert'),
+      message: this.translateService.instant('BUDGETBOOK_DETAIL.deleteAlertMessage', { amountDescription: amount.description }),
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translateService.instant('COMMON.cancel'),
           role: 'cancel'
         },
         {
-          text: 'Delete the amount',
+          text: this.translateService.instant('BUDGETBOOK_DETAIL.deleteButton'),
           handler: () => {
             this.deleteAmount(amount);
           }
@@ -283,7 +284,8 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
 
   public getLastChangeElapsedTime(amount: AmountDto): string {
     const lastChangeDay = new Date(amount.changeTimestamp ? amount.changeTimestamp : amount.insertionTimestamp);
-    return getLastChangeElapsedTime(lastChangeDay);
+    const elapsedTime = getLastChangeElapsedTime(lastChangeDay);
+    return elapsedTime.time + ' ' + this.translateService.instant('TIME_UNITS.'+elapsedTime.unit)
   }
 
   public navigateToBudgetBooks(): void {

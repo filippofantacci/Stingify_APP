@@ -7,7 +7,7 @@ import { BudgetBookControllerService } from 'src/app/core/api/stingify/services'
 import { UserService } from 'src/app/core/services/user.service';
 import { ProgressbarOption } from 'src/app/shared/components/progressbar/progressbar.component';
 import { getLastChangeElapsedTime } from 'src/app/utils/date-utils';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-budget-books',
   templateUrl: './budget-books.page.html',
@@ -32,6 +32,7 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
     private actionSheetCtrl: ActionSheetController,
     private alertController: AlertController,
     private router: Router,
+    private translateService: TranslateService,
   ) { }
 
   ngOnInit() {
@@ -58,7 +59,7 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
       header: budgetBook.description,
       buttons: [
         {
-          text: 'Delete',
+          text: this.translateService.instant('COMMON.delete'),
           role: 'destructive',
           icon: 'trash',
           handler: () => {
@@ -66,14 +67,14 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
           }
         },
         {
-          text: 'Edit',
+          text: this.translateService.instant('COMMON.edit'),
           icon: 'create',
           handler: () => {
             this.navigateToBudgetBookEdit(budgetBook);
           }
         },
         {
-          text: 'Cancel',
+          text: this.translateService.instant('COMMON.cancel'),
           role: 'cancel',
         },
       ],
@@ -87,15 +88,15 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
 
   private showAlertDeleteBudgetBook(budgetBook: BudgetBookDto): void {
     this.alertController.create({
-      header: "Alert",
-      message: "Deleting the budget book " + budgetBook.description + ", all the related informations such as amounts and acategories will be lost.",
+      header: this.translateService.instant('alert'),
+      message: this.translateService.instant('BUDGETBOOKS.deleteAlertMessage', { budgetBookDescription: budgetBook.description }),//"Deleting the budget book " + budgetBook.description + ", all the related informations such as amounts and acategories will be lost.",
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translateService.instant('COMMON.cancel'),
           role: 'cancel'
         },
         {
-          text: 'Delete the budget book',
+          text: this.translateService.instant('COMMON.deleteButton'),
           handler: () => {
             this.deleteBudgetBook(budgetBook);
           }
@@ -120,24 +121,25 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
 
   public getLastChangeElapsedTime(budgetBook: BudgetBookDto): string {
     const lastChangeDay = new Date(budgetBook.changeTimestamp ? budgetBook.changeTimestamp : budgetBook.insertionTimestamp);
-    return getLastChangeElapsedTime(lastChangeDay);
+    const elapsedTime = getLastChangeElapsedTime(lastChangeDay);
+    return elapsedTime.time + ' ' + this.translateService.instant('TIME_UNITS.'+elapsedTime.unit);
   }
 
   public getProgressbarOption(budgetBook: BudgetBookDto): ProgressbarOption {
     return {
       sections: [
         {
-          label: 'Incomings',
+          label: this.translateService.instant('PES.incomings'),
           value: budgetBook.incomings,
           color: 'var(--ion-color-success)',
         },
         {
-          label: 'Savings',
+          label: this.translateService.instant('AMOUNT_TYPES.savings'),
           value: budgetBook.savings,
           color: 'var(--ion-color-primary)',
         },
         {
-          label: 'Expenses',
+          label: this.translateService.instant('AMOUNT_TYPES.expenses'),
           value: budgetBook.expenses,
           color: 'var(--ion-color-danger)',
         }

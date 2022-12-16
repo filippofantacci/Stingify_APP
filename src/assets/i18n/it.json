@@ -1,0 +1,89 @@
+{
+    "COMMON": {
+        "back": "Indietro",
+        "save": "Salva",
+        "cancel": "Annulla",
+        "edit": "Modifica",
+        "delete": "Elimina",
+        "alert": "Attenzione",
+        "select": "Seleziona",
+        "none": "nessuna",
+        "restore": "Ripristina",
+        "confirm": "Conferma"
+    },
+    "LABELS": {
+        "description": "Descrizione",
+        "categories": "Categorie",
+        "date": "Data",
+        "amountType": "Tipologia Importo",
+        "category": "Categoria",
+        "macroCategory": "Macrocategoria"
+    },
+    "TIME_UNITS": {
+        "days": "giorni",
+        "hours": "ore",
+        "minutes": "minuti",
+        "seconds": "secondi"
+    },
+    "AMOUNT_TYPES": {
+        "incomings": "Entrate",
+        "savings": "Risparmi",
+        "expenses": "Spese",
+        "Incoming": "Entrate",
+        "Saving": "Risparmi",
+        "Expense": "Spese"
+    },
+    "MENU": {
+        "Budget Books": "Libri di Bilancio",
+        "Categories": "Categorie",
+        "Saving Goals": "Obbiettivi Risparmio",
+        "Reports": "Reports"
+    },
+    "ERROR_PAGE": {
+        "text": "Pagina non esistente",
+        "button": "Torna alla home"
+    },
+    "BUDGETBOOKS": {
+        "balance": "Saldo",
+        "realSaving": "Risparmio reale",
+        "deleteAlertMessage": "Eliminando il libro di bilancio {{budgetBookDescription}}, tutte le informazioni relative come importi e categorie saranno perse.",
+        "deleteButton": "Elimina il libro di bilancio"
+    },
+    "BUDGETBOOK_EDIT": {
+        "title": "Modifica libro di bilancio"
+    },
+    "BUDGETBOOK_CREATE": {
+        "title": "Crea Libro di Bilancio"
+    },
+    "BUDGETBOOK_DETAIL": {
+        "date": "Data",
+        "planned": "Previsto",
+        "actual": "Effettivo",
+        "deleteAlertMessage": "Eliminando l'importo {{amountDescription}}, le informazioni saranno perse.",
+        "deleteButton": "Elimina l'importo",
+        "editAmountTitle": "Modifica Importo",
+        "addAmountTitle": "Aggiungi Importo"
+    },
+    "CATEGORY": {
+        "editCategoryTitle": "Edit Category",
+        "createCategoryTitle": "Create Category",
+        "title": "Categorie",
+        "noMacrocategoryMessage": "Aggiungi a una Macrocategoriase vuoi usarla.",
+        "restoreCategoryMessage": "Sei sicuro di ripristinare la categoria.",
+        "deleteCategoryAction": "Elimina Macrocategoria",
+        "editCategoryAction": "Modifica Macrocategoria",
+        "addToMacroCategoryAction": "Aggiungi a una Macrocategoria",
+        "deleteCategoryMessage": "Sei sicuro di voler eliminare {{categoryDescription}}."
+    },
+    "MACRO_CATEGORY": {
+        "editMacroCategoryTitle": "Modifica Macrocategoria",
+        "noCategoryAvaiabile": "Nessuna Categoria disponibile",
+        "newCategoryButton": "Crea nuova categoria",
+        "createMacroCategoryTitle": "Crea Macrocategoria",
+        "title": "Macrocategorie",
+        "restoreMacroCategoryMessage": "Sei sicuro di ripristinare la macrocategoria.",
+        "deleteMacroCategoryAction": "Elimina Macrocategoria",
+        "editMacroCategoryAction": "Modifica Macrocategoria",
+        "deleteMacroCategoryMessage": "Sei sicuro di voler eliminare {{macroCategoryDescription}}."
+    }
+}
