@@ -88,7 +88,7 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
 
   private showAlertDeleteBudgetBook(budgetBook: BudgetBookDto): void {
     this.alertController.create({
-      header: this.translateService.instant('alert'),
+      header: this.translateService.instant('COMMON.alert'),
       message: this.translateService.instant('BUDGETBOOKS.deleteAlertMessage', { budgetBookDescription: budgetBook.description }),//"Deleting the budget book " + budgetBook.description + ", all the related informations such as amounts and acategories will be lost.",
       buttons: [
         {
@@ -129,7 +129,7 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
     return {
       sections: [
         {
-          label: this.translateService.instant('PES.incomings'),
+          label: this.translateService.instant('AMOUNT_TYPES.incomings'),
           value: budgetBook.incomings,
           color: 'var(--ion-color-success)',
         },
