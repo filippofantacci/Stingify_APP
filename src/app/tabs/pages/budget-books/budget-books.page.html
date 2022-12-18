@@ -5,11 +5,11 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-card *ngFor="let budgetBook of budgetBooksList" (click)="navigateToBudgetBook(budgetBook)">
-    <ion-card-header>
+  <ion-card *ngFor="let budgetBook of budgetBooksList">
+    <ion-card-header (click)="navigateToBudgetBook(budgetBook)">
       <ion-card-title>{{budgetBook.description}}</ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content (click)="navigateToBudgetBook(budgetBook)">
       <app-progressbar [progressbarOption]="getProgressbarOption(budgetBook)"></app-progressbar>
       <p>{{ 'BUDGETBOOKS.balance' | translate }}: {{getBalance(budgetBook)}}€</p>
       <p>{{ 'BUDGETBOOKS.realSaving' | translate }}: {{getRealSaving(budgetBook)}}€</p>
