@@ -33,7 +33,7 @@ export class ThemeChangerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initTheme();
     this.subscriptions.push(this.userService.themeChanged$.subscribe(v => {
-      this.swithcTheme();
+      this.changeDetectorRef.markForCheck();
     }));
   }
 
@@ -75,6 +75,7 @@ export class ThemeChangerComponent implements OnInit, OnDestroy {
    */
   private setThemeAttribute(): void {
     document.body.setAttribute('color-theme', this.userService.theme);
+    this.userService.onThemeChanged();
     this.changeDetectorRef.markForCheck();
   }
 

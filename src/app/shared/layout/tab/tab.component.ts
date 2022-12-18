@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
-import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-tab',
@@ -12,8 +11,7 @@ export class TabComponent implements OnInit {
   @Input() title!: string;
 
   constructor(
-    private keycloakService: KeycloakService,
-    public userService: UserService,
+    private keycloakService: KeycloakService
   ) { }
 
   ngOnInit() { }
@@ -22,7 +20,4 @@ export class TabComponent implements OnInit {
     this.keycloakService.logout().then(() => this.keycloakService.clearToken());
   }
 
-  public swithcTheme(): void {
-    this.userService.onThemeChanged();
-  }
 }
