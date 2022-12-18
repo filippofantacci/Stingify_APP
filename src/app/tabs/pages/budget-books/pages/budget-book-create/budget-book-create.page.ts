@@ -96,7 +96,7 @@ export class BudgetBookCreatePage implements OnInit, OnDestroy {
         ]).pipe(
           map(([macroCategories]) => {
 
-            this.macroCategories = macroCategories;
+            this.macroCategories = macroCategories.filter(macroCategory => macroCategory.categories.length > 0);
             this.ready = true;
             this.changeDetectorRef.markForCheck();
 

@@ -112,7 +112,7 @@ export class BudgetBookEditPage implements OnInit, OnDestroy {
 
             this.budgetBook = budgetbook;
             this.budgetBookCategories = budgetBookCategories;
-            this.userMacroCategories = userMacroCategories;
+            this.userMacroCategories =  userMacroCategories.filter(macroCategory => macroCategory.categories.length > 0);
 
             this.selectedCategories = this.budgetBookCategories;
             this.macroCategories = this.userMacroCategories;
