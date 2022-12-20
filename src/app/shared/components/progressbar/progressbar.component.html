@@ -1,30 +1,28 @@
 <!-- <ng-container *ngIf="sum > 0">
-
-  <div class="progress">
-    <div *ngFor="let section of progressbarOption.sections" class="progress-bar"
-      [style.width]="getPercentage(section) + '%'" [style.background-color]="section.color">
+  
+  <div class="padding-left-10 padding-right-10">
+    <div class="progress">
+      <div *ngFor="let section of progressbarOption.sections" class="progress-bar no-border-readius"
+        [style.width]="getPercentage(section) + '%'" [style.background-color]="section.color">
+      </div>
     </div>
   </div>
-  <span *ngFor="let section of progressbarOption.sections">
-    {{section.label}}: <b>{{section.value}} €</b><br>
-  </span>
 </ng-container> -->
+
 <ng-container *ngIf="sum > 0">
 
   <ion-grid>
     <ng-container *ngFor="let section of progressbarOption.sections">
       <ion-row class="ion-justify-content-between">
-        <ion-col class="ion-text-left" size="6">
+        <ion-col class="ion-text-left no-padding-bottom" size="6">
           {{section.label}}
         </ion-col>
-        <ion-col class="ion-text-right" size="6">
+        <ion-col class="ion-text-right no-padding-bottom" size="6">
           {{section.value}}€
         </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
+        <ion-col size="12" class="no-padding-bottom">
           <div class="progress">
-
+  
             <div class="progress-bar" [style.width]="getPercentage(section) + '%'"
               [style.background-color]="section.color">
             </div>

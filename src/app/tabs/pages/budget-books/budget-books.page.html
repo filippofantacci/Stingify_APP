@@ -11,8 +11,8 @@
     </ion-card-header>
     <ion-card-content (click)="navigateToBudgetBook(budgetBook)">
       <app-progressbar [progressbarOption]="getProgressbarOption(budgetBook)"></app-progressbar>
-      <p>{{ 'BUDGETBOOKS.balance' | translate }}: {{getBalance(budgetBook)}}€</p>
-      <p>{{ 'BUDGETBOOKS.realSaving' | translate }}: {{getRealSaving(budgetBook)}}€</p>
+      <p class="padding-left-10 padding-right-10">{{ 'BUDGETBOOKS.balance' | translate }}: {{getBalance(budgetBook)}}€</p>
+      <p class="padding-left-10 padding-right-10">{{ 'BUDGETBOOKS.realSaving' | translate }}: {{getRealSaving(budgetBook)}}€</p>
     </ion-card-content>
     <ion-footer>
       <ion-grid>

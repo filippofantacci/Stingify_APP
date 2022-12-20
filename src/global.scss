@@ -97,3 +97,21 @@
   ion-chip.unclickable {
     pointer-events: none;
   }
+
+  .no-ripple {
+    --ripple-color: transparent;
+  }
+
+  .padding-left-10 {
+    padding-left: 10px;
+  }
+  .padding-right-10 {
+      padding-right: 10px;
+  }
+  .no-padding-bottom {
+    padding-bottom: 0;
+  }
+
+  .no-border-readius {
+      border-radius: 0 !important
+  }
