@@ -51,6 +51,14 @@ const routes: Routes = [
         canActivate: [RouteAccessGuard],
         loadChildren: () => import('./pages/categories/categories.module').then( m => m.CategoriesPageModule)
       },
+      {
+        path: 'recurrings',
+        data : {
+          url: 'recurrings'
+        },
+        canActivate: [RouteAccessGuard],
+        loadChildren: () => import('./pages/recurrings/recurrings.module').then( m => m.RecurringsPageModule)
+      },
     ]
   },
 ];
