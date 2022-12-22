@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { ThemeChangerComponent } from './components/theme-changer/theme-changer.component';
 import { ProgressbarComponent } from './components/progressbar/progressbar.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { AmountCardComponent } from './components/cards/amount-card/amount-card.component';
 
 
 
@@ -18,11 +19,13 @@ import { TranslateModule } from '@ngx-translate/core';
     TabComponent,
     ThemeChangerComponent,
     ProgressbarComponent,
+    AmountCardComponent,
   ],
   exports: [
     TabComponent,
     ThemeChangerComponent,
     ProgressbarComponent,
+    AmountCardComponent,
     TranslateModule,
   ]
 })

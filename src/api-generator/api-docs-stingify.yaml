@@ -68,6 +68,71 @@ paths:
             application/json:
               schema:
                 type: string
+  /recurring-amounts:
+    get:
+      tags:
+      - recurring-amounts-controller
+      operationId: getAllRecurringAmount
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecurringAmountDTO'
+    put:
+      tags:
+      - recurring-amounts-controller
+      operationId: updateRecurringAmount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecurringAmountDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecurringAmountDTO'
+    post:
+      tags:
+      - recurring-amounts-controller
+      operationId: addRecurringAmount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecurringAmountDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecurringAmountDTO'
+    delete:
+      tags:
+      - recurring-amounts-controller
+      operationId: deleteRecurringAmount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecurringAmountDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
   /macro-categories:
     get:
       tags:
@@ -545,6 +610,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserDTO'
+  /recurring-amounts/{id}:
+    get:
+      tags:
+      - recurring-amounts-controller
+      operationId: getRecurringAmount
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecurringAmountDTO'
+  /recurring-amounts/user/{userId}:
+    get:
+      tags:
+      - recurring-amounts-controller
+      operationId: getRecurringAmountByUserId
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecurringAmountDTO'
   /macro-categories/{id}:
     get:
       tags:
@@ -854,6 +959,36 @@ components:
         cancellationTimestamp:
           type: string
           format: date-time
+    RecurringAmountDTO:
+      type: object
+      properties:
+        recurringAmountId:
+          type: integer
+          format: int32
+        creatorUserId:
+          type: integer
+          format: int32
+        category:
+          $ref: '#/components/schemas/CategoryDTO'
+        description:
+          type: string
+        planned:
+          type: number
+          format: float
+        actual:
+          type: number
+          format: float
+        amountType:
+          $ref: '#/components/schemas/AmountTypeDTO'
+        insertionTimestamp:
+          type: string
+          format: date-time
+        changeTimestamp:
+          type: string
+          format: date-time
+        cancellationTimestamp:
+          type: string
+          format: date-time
     BudgetBookDTO:
       type: object
       properties:
@@ -1005,14 +1140,14 @@ components:
           format: int64
         sort:
           $ref: '#/components/schemas/Sort'
-        unpaged:
-          type: boolean
         paged:
           type: boolean
-        pageNumber:
+        unpaged:
+          type: boolean
+        pageSize:
           type: integer
           format: int32
-        pageSize:
+        pageNumber:
           type: integer
           format: int32
     Sort:
@@ -1020,9 +1155,9 @@ components:
       properties:
         empty:
           type: boolean
-        sorted:
-          type: boolean
         unsorted:
+          type: boolean
+        sorted:
           type: boolean
     PageAmountDTO:
       type: object

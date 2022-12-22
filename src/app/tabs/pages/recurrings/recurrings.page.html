@@ -1,3 +1,31 @@
 <app-tab [title]="'Recurrings'">
-  
+
+    <ion-content [fullscreen]="true">
+        <ion-refresher slot="fixed" (ionRefresh)="refreshAmounts($event)">
+            <ion-refresher-content>
+            </ion-refresher-content>
+        </ion-refresher>
+
+        <app-amount-card *ngFor="let recurringAmount of recurringAmounts" [amount]="recurringAmount"
+            (onShowActionsClicked)="showActions(recurringAmount)"></app-amount-card>
+
+    </ion-content>
+
 </app-tab>
+
+<ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button>
+        <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="start">
+        <ion-fab-button color="danger" (click)="addExpenseAmount()">
+            <ion-icon name="remove-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="success" (click)="addIncomeAmount()">
+            <ion-icon name="add-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="primary" (click)="addSavingAmount()">
+            <ion-icon name="wallet-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab-list>
+</ion-fab>

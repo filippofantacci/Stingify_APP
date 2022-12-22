@@ -8,6 +8,8 @@ import { RecurringsPageRoutingModule } from './recurrings-routing.module';
 
 import { RecurringsPage } from './recurrings.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AddRecurringAmountModalComponent } from './add-recurring-amount-modal/add-recurring-amount-modal.component';
+import { EditRecurringAmountModalComponent } from './edit-recurring-amount-modal/edit-recurring-amount-modal.component';
 
 @NgModule({
   imports: [
@@ -18,6 +20,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
     ReactiveFormsModule
   ],
-  declarations: [RecurringsPage]
+  declarations: [
+    RecurringsPage, 
+    AddRecurringAmountModalComponent, 
+    EditRecurringAmountModalComponent
+  ]
 })
 export class RecurringsPageModule { }

@@ -29,7 +29,6 @@ export class EditAmountModalComponent implements OnInit, OnDestroy {
   public date: Date;
 
   constructor(
-    private userService: UserService,
     private amountsControllerService: AmountsControllerService,
     private modalController: ModalController,
     private changeDetectorRef: ChangeDetectorRef,

@@ -1,0 +1,56 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>{{ 'RECURRING.editAmountTitle' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close(false)" color="primary">{{ 'COMMON.cancel' | translate}}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen *ngIf="ready">
+
+  <form [formGroup]="formEditAmount">
+
+    <ion-list>
+      <!-- description -->
+      <ion-item>
+        <ion-label>{{ 'LABELS.description' | translate }}: </ion-label>
+        <ion-input formControlName="description" class="ion-text-right"></ion-input>
+      </ion-item>
+
+      <!-- planned -->
+      <ion-item>
+        <ion-label>{{ 'RECURRING.planned' | translate }}:</ion-label>
+        <ion-input formControlName="planned" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
+      </ion-item>
+      
+      <!-- actual -->
+      <ion-item>
+        <ion-label>{{ 'RECURRING.actual' | translate }}:</ion-label>
+        <ion-input formControlName="actual" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    </form>
+    
+  </ion-content>
+  <ion-footer>
+    <ion-grid>
+      <ion-row class="ion-justify-content-between">
+        
+        <ion-col>
+          <ion-button (click)="onSubmit()" [disabled]="!formEditAmount.valid" expand="block" color="primary">
+            <ion-icon slot="start" icon="save-outline" class="component-icon"></ion-icon>
+            {{ 'COMMON.save' | translate }}
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="close(true)" expand="block" color="secondary" fill="outline">
+            <ion-icon slot="start" icon="arrow-undo-outline" class="component-icon"></ion-icon>
+            {{ 'COMMON.cancel' | translate }}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      
+    </ion-grid>
+  </ion-footer>

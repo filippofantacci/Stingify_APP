@@ -1,0 +1,48 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{amount.description}}</ion-card-title>
+    <ion-label>{{amount?.category?.description}} - {{amount?.category?.macroCategory?.description}}</ion-label>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngIf="amount?.date">{{'BUDGETBOOK_DETAIL.date' | translate}}</ion-col>
+        <ion-col>{{'BUDGETBOOK_DETAIL.planned' | translate}}</ion-col>
+        <ion-col>{{'BUDGETBOOK_DETAIL.actual' | translate}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col *ngIf="amount?.date">
+          <b>
+            {{amount.date | date: 'dd/MM/yyyy'}}
+          </b>
+        </ion-col>
+        <ion-col>
+          <ion-text [color]="getColor(amount.amountType)">
+            <b>
+              {{amount.planned | currency:'EUR': 'symbol' }}
+            </b>
+          </ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-text [color]="getColor(amount.amountType)">
+            <b>
+              {{amount.actual | currency:'EUR': 'symbol' }}
+            </b>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+  <ion-footer>
+    <ion-grid>
+      <ion-row class="ion-justify-content-between">
+        <ion-col size="auto" class="ion-text-center">
+          <div>{{getLastChangeElapsedTime(amount)}}</div>
+        </ion-col>
+        <ion-col size="auto" class="ion-text-center">
+          <ion-icon name="ellipsis-horizontal-outline" (click)="showActions(amount)"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+</ion-card>

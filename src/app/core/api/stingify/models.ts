@@ -2,6 +2,7 @@ export { UserDto } from './models/user-dto';
 export { AmountTypeDto } from './models/amount-type-dto';
 export { CategoryDto } from './models/category-dto';
 export { MacroCategoryDto } from './models/macro-category-dto';
+export { RecurringAmountDto } from './models/recurring-amount-dto';
 export { BudgetBookDto } from './models/budget-book-dto';
 export { AmountDto } from './models/amount-dto';
 export { UserBudgetBooksDto } from './models/user-budget-books-dto';

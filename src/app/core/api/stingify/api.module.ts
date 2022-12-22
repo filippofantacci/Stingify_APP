@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { UserControllerService } from './services/user-controller.service';
+import { RecurringAmountsControllerService } from './services/recurring-amounts-controller.service';
 import { MacroCategoryControllerService } from './services/macro-category-controller.service';
 import { CategoryControllerService } from './services/category-controller.service';
 import { BudgetBookControllerService } from './services/budget-book-controller.service';
@@ -20,6 +21,7 @@ import { AmountTypeControllerService } from './services/amount-type-controller.s
   declarations: [],
   providers: [
     UserControllerService,
+    RecurringAmountsControllerService,
     MacroCategoryControllerService,
     CategoryControllerService,
     BudgetBookControllerService,
