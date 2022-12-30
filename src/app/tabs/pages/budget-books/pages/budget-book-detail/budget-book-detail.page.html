@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="navigateToBudgetBooks()">
+      <ion-button (click)="navigateToBudgetBooks()" color="primary">
         <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>{{budgetBook?.description}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="navigateToBudgetBookEdit()">
+      <ion-button (click)="navigateToBudgetBookEdit()" color="primary">
         <ion-icon slot="end" name="create-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -42,6 +42,9 @@
     </ion-fab-button>
     <ion-fab-button color="primary" (click)="addSavingAmount()">
       <ion-icon name="wallet-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="secondary" (click)="addrecurringAmount()">
+      <ion-icon name="repeat-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab-list>
 </ion-fab>

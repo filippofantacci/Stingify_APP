@@ -15,4 +15,5 @@ export interface AmountDto {
   description?: string;
   insertionTimestamp?: string;
   planned?: number;
+  recurringAmountId?: number;
 }

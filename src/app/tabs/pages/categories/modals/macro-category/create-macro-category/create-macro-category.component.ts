@@ -106,7 +106,7 @@ export class CreateMacroCategoryComponent implements OnInit, OnDestroy {
     this.presentLoadingWithOptions().then(spinner => {
       this.subscriptions.push(
         this.categoryControllerService.getCategoriesByUserId({ userId: this.userService.userId, unused: true }).subscribe(res => {
-          this.categories = res;
+          this.categories = res.filter(category => category.cancellationTimestamp === null);
           this.ready = true;
           spinner.dismiss();
           this.changeDetectorRef.markForCheck();

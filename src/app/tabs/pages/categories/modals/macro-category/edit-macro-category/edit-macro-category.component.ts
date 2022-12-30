@@ -115,7 +115,7 @@ export class EditMacroCategoryComponent implements OnInit, OnDestroy {
     this.presentLoadingWithOptions().then(spinner => {
       this.subscriptions.push(
         this.categoryControllerService.getCategoriesByUserId({ userId: this.userService.userId, unused: true }).subscribe(res => {
-          this.unusedCategories = res;
+          this.unusedCategories = res.filter(category => category.cancellationTimestamp === null);
           this.categories = this.macroCategory.categories;
           this.selectedCategories = this.macroCategory.categories;
           this.setCategorisOptions();

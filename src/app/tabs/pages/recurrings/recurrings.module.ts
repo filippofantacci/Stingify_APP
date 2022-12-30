@@ -8,7 +8,7 @@ import { RecurringsPageRoutingModule } from './recurrings-routing.module';
 
 import { RecurringsPage } from './recurrings.page';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { AddRecurringAmountModalComponent } from './add-recurring-amount-modal/add-recurring-amount-modal.component';
+import { CreateRecurringAmountModalComponent } from './create-recurring-amount-modal/create-recurring-amount-modal.component';
 import { EditRecurringAmountModalComponent } from './edit-recurring-amount-modal/edit-recurring-amount-modal.component';
 
 @NgModule({
@@ -22,7 +22,7 @@ import { EditRecurringAmountModalComponent } from './edit-recurring-amount-modal
   ],
   declarations: [
     RecurringsPage, 
-    AddRecurringAmountModalComponent, 
+    CreateRecurringAmountModalComponent, 
     EditRecurringAmountModalComponent
   ]
 })

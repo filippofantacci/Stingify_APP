@@ -2,7 +2,9 @@
   <ion-toolbar>
     <ion-title>{{ 'BUDGETBOOK_DETAIL.editAmountTitle' | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="close(false)" color="primary">{{ 'COMMON.cancel' | translate}}</ion-button>
+      <ion-button (click)="close(false)" color="primary">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -11,11 +13,6 @@
   <form [formGroup]="formEditAmount">
 
     <ion-list>
-      <!-- description -->
-      <ion-item>
-        <ion-label>{{ 'LABELS.description' | translate }}: </ion-label>
-        <ion-input formControlName="description" class="ion-text-right"></ion-input>
-      </ion-item>
       <!-- date -->
       <ion-item id="open-datetime-modal">
         <ion-label>{{ 'LABELS.date' | translate }}: </ion-label>
@@ -25,49 +22,54 @@
       <ion-modal class="datetime-modal" trigger="open-datetime-modal">
         <ng-template>
           <ion-content>
-            <ion-datetime 
-            formControlName="date" first-day-of-week="1" display-format="DD/MM/YYYY" picker-format="MMMM/DD/YYYY"
-            cancelText="Cancel" doneText="Done" showDefaultButtons="true" size="cover" presentation="date"
-            (ionChange)="dateChange()">
-          </ion-datetime>
+            <ion-datetime formControlName="date" first-day-of-week="1" display-format="DD/MM/YYYY"
+              picker-format="MMMM/DD/YYYY" cancelText="Cancel" doneText="Done" showDefaultButtons="true" size="cover"
+              presentation="date" (ionChange)="dateChange()">
+            </ion-datetime>
           </ion-content>
         </ng-template>
       </ion-modal>
 
+      <!-- description -->
+      <ion-item>
+        <ion-label>{{ 'LABELS.description' | translate }}: </ion-label>
+        <ion-input formControlName="description" class="ion-text-right"></ion-input>
+      </ion-item>
+
       <!-- planned -->
       <ion-item>
-        <ion-label>{{ 'BUDGETBOOK_DETAIL.planned' | translate }}:</ion-label>
+        <ion-label>{{ 'LABELS.planned' | translate }}:</ion-label>
         <ion-input formControlName="planned" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
       </ion-item>
-      
+
       <!-- actual -->
       <ion-item>
-        <ion-label>{{ 'BUDGETBOOK_DETAIL.actual' | translate }}:</ion-label>
+        <ion-label>{{ 'LABELS.actual' | translate }}:</ion-label>
         <ion-input formControlName="actual" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
       </ion-item>
 
     </ion-list>
 
-    </form>
-    
-  </ion-content>
-  <ion-footer>
-    <ion-grid>
-      <ion-row class="ion-justify-content-between">
-        
-        <ion-col>
-          <ion-button (click)="onSubmit()" [disabled]="!formEditAmount.valid" expand="block" color="primary">
-            <ion-icon slot="start" icon="save-outline" class="component-icon"></ion-icon>
-            {{ 'COMMON.save' | translate }}
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button (click)="close(true)" expand="block" color="secondary" fill="outline">
-            <ion-icon slot="start" icon="arrow-undo-outline" class="component-icon"></ion-icon>
-            {{ 'COMMON.cancel' | translate }}
-          </ion-button>
-        </ion-col>
-      </ion-row>
-      
-    </ion-grid>
-  </ion-footer>
+  </form>
+
+</ion-content>
+<ion-footer>
+  <ion-grid>
+    <ion-row class="ion-justify-content-between">
+
+      <ion-col>
+        <ion-button (click)="onSubmit()" [disabled]="!formEditAmount.valid" expand="block" color="primary">
+          <ion-icon slot="start" icon="save-outline" class="component-icon"></ion-icon>
+          {{ 'COMMON.save' | translate }}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="close(true)" expand="block" color="secondary" fill="outline">
+          <ion-icon slot="start" icon="arrow-undo-outline" class="component-icon"></ion-icon>
+          {{ 'COMMON.cancel' | translate }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-footer>

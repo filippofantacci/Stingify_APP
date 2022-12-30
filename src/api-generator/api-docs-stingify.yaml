@@ -573,6 +573,28 @@ paths:
             application/json:
               schema:
                 type: string
+  /amounts/recurrings:
+    post:
+      tags:
+      - amounts-controller
+      operationId: addRecurringAmounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AmountDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AmountDTO'
   /users/{id}:
     get:
       tags:
@@ -1022,6 +1044,10 @@ components:
         savings:
           type: number
           format: float
+        recurringAmounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecurringAmountDTO'
     AmountDTO:
       type: object
       properties:
@@ -1058,6 +1084,9 @@ components:
         cancellationTimestamp:
           type: string
           format: date-time
+        recurringAmountId:
+          type: integer
+          format: int32
     UserBudgetBooksDTO:
       type: object
       properties:
@@ -1126,9 +1155,9 @@ components:
           format: int32
         pageable:
           $ref: '#/components/schemas/PageableObject'
-        first:
-          type: boolean
         last:
+          type: boolean
+        first:
           type: boolean
         empty:
           type: boolean
@@ -1144,10 +1173,10 @@ components:
           type: boolean
         unpaged:
           type: boolean
-        pageSize:
+        pageNumber:
           type: integer
           format: int32
-        pageNumber:
+        pageSize:
           type: integer
           format: int32
     Sort:
@@ -1155,9 +1184,9 @@ components:
       properties:
         empty:
           type: boolean
-        unsorted:
-          type: boolean
         sorted:
+          type: boolean
+        unsorted:
           type: boolean
     PageAmountDTO:
       type: object
@@ -1185,9 +1214,9 @@ components:
           format: int32
         pageable:
           $ref: '#/components/schemas/PageableObject'
-        first:
-          type: boolean
         last:
+          type: boolean
+        first:
           type: boolean
         empty:
           type: boolean

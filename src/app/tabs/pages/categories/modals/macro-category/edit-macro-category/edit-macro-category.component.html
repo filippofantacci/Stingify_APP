@@ -2,7 +2,9 @@
   <ion-toolbar>
     <ion-title>{{ 'MACRO_CATEGORY.editMacroCategoryTitle' | translate }}</ion-title>
     <ion-buttons slot="end"> 
-      <ion-button (click)="close(false)" color="primary">{{ 'COMMON.cancel' | translate }}</ion-button>
+      <ion-button (click)="close(false)" color="primary">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

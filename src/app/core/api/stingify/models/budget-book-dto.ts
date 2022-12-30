@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import { CategoryDto } from './category-dto';
+import { RecurringAmountDto } from './recurring-amount-dto';
 export interface BudgetBookDto {
   budgetBookId?: number;
   cancellationTimestamp?: string;
@@ -11,5 +12,6 @@ export interface BudgetBookDto {
   expenses?: number;
   incomings?: number;
   insertionTimestamp?: string;
+  recurringAmounts?: Array<RecurringAmountDto>;
   savings?: number;
 }

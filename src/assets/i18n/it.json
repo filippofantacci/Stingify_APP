@@ -17,7 +17,10 @@
         "date": "Data",
         "amountType": "Tipologia Importo",
         "category": "Categoria",
-        "macroCategory": "Macrocategoria"
+        "macroCategory": "Macrocategoria",
+        "recurringAmounts": "Importi Ricorrenti",
+        "planned": "Previsto",
+        "actual": "Effettivo"
     },
     "TIME_UNITS": {
         "days": "giorni",
@@ -45,7 +48,7 @@
         "button": "Torna alla home"
     },
     "BUDGETBOOKS": {
-        "balance": "Saldo",
+        "availability": "Disponibilità",
         "realSaving": "Risparmio reale",
         "deleteAlertMessage": "Eliminando il libro di bilancio {{budgetBookDescription}}, tutte le informazioni relative come importi e categorie saranno perse.",
         "deleteButton": "Elimina il libro di bilancio"
@@ -54,12 +57,11 @@
         "title": "Modifica libro di bilancio"
     },
     "BUDGETBOOK_CREATE": {
-        "title": "Crea Libro di Bilancio"
+        "title": "Crea Libro di Bilancio",
+        "addCategoriesToUnlockRecurringAmounts": "Seleziona le categorie per sbloccare gli importi ricorrenti."
     },
     "BUDGETBOOK_DETAIL": {
         "date": "Data",
-        "planned": "Previsto",
-        "actual": "Effettivo",
         "deleteAlertMessage": "Eliminando l'importo {{amountDescription}}, le informazioni saranno perse.",
         "deleteButton": "Elimina l'importo",
         "editAmountTitle": "Modifica Importo",
@@ -86,5 +88,10 @@
         "deleteMacroCategoryAction": "Elimina Macrocategoria",
         "editMacroCategoryAction": "Modifica Macrocategoria",
         "deleteMacroCategoryMessage": "Sei sicuro di voler eliminare {{macroCategoryDescription}}."
+    },
+    "RECURRINGS": {
+        "addRecurringAmountTitle": "Aggiungi Importo Ricorrente",
+        "editRecurringAmountTitle": "Modifica Importo Ricorrente",
+        "deleteRecurringAmountAlertMessage": "Sei sicuro di voler eliminare l'importo ricorrente {{recurringAmountDescription}}."
     }
 }

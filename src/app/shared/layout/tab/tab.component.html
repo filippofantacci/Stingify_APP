@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="logOut()">
+      <ion-button (click)="logOut()" color="primary">
         <ion-icon slot="end" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -17,7 +17,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">{{title}}</ion-title>
+      <ion-title size="large">{{ 'MENU.' + title | translate}}</ion-title>
     </ion-toolbar>
   </ion-header>
 

@@ -11,6 +11,7 @@ import { getAmountTypeColor } from 'src/app/utils/style-utils';
 import { getLastChangeElapsedTime } from 'src/app/utils/date-utils';
 import { EditAmountModalComponent } from './edit-amount-modal/edit-amount-modal.component';
 import { TranslateService } from '@ngx-translate/core';
+import { AddRecurringAmountModalComponent } from './add-recurring-amount-modal/add-recurring-amount-modal.component';
 
 @Component({
   selector: 'app-budget-book-detail',
@@ -67,6 +68,9 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
   public addSavingAmount(): void {
     this.openAddAmountModal(AmountTypesEnum.Saving);
   }
+  public addrecurringAmount(): void {
+    this.openAddRecurringAmountModal();
+  }
 
   private openAddAmountModal(amountTyipeId: number): void {
     const amountTypeDto: AmountTypeDto = {
@@ -80,6 +84,28 @@ export class BudgetBookDetailPage implements OnInit, OnDestroy {
         amountType: amountTypeDto,
         macroCategories: this.macroCategories,
         amountTypes: this.amountTypes,
+        budgetBookId: this.budgetBook.budgetBookId
+      }
+    })
+      .then(modal => {
+        modal.present();
+        modal.onDidDismiss().then(res => {
+          this.refreshAmounts();
+        })
+          .catch(reason => {
+            console.log(reason);
+          })
+      })
+      .catch(reason => {
+        console.log(reason);
+      });
+  }
+  private openAddRecurringAmountModal(): void {
+
+    this.modalController.create({
+      component: AddRecurringAmountModalComponent,
+      canDismiss: true,
+      componentProps: {
         budgetBookId: this.budgetBook.budgetBookId
       }
     })

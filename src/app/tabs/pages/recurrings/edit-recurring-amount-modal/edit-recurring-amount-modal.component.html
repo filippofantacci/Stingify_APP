@@ -1,8 +1,10 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-title>{{ 'RECURRING.editAmountTitle' | translate }}</ion-title>
+    <ion-title>{{ 'RECURRINGS.editRecurringAmountTitle' | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="close(false)" color="primary">{{ 'COMMON.cancel' | translate}}</ion-button>
+      <ion-button (click)="close(false)" color="primary">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -19,13 +21,13 @@
 
       <!-- planned -->
       <ion-item>
-        <ion-label>{{ 'RECURRING.planned' | translate }}:</ion-label>
+        <ion-label>{{ 'LABELS.planned' | translate }}:</ion-label>
         <ion-input formControlName="planned" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
       </ion-item>
       
       <!-- actual -->
       <ion-item>
-        <ion-label>{{ 'RECURRING.actual' | translate }}:</ion-label>
+        <ion-label>{{ 'LABELS.actual' | translate }}:</ion-label>
         <ion-input formControlName="actual" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
       </ion-item>
 

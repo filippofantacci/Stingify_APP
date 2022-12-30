@@ -17,7 +17,10 @@
         "date": "Date",
         "amountType": "Amount Type",
         "category": "Category",
-        "macroCategory": "Macro Category"
+        "macroCategory": "Macro Category",
+        "recurringAmounts": "Recurring Amounts",
+        "planned": "Planned",
+        "actual": "Actual"
     },
     "TIME_UNITS": {
         "days": "days",
@@ -45,7 +48,7 @@
         "button": "Back to home"
     },
     "BUDGETBOOKS": {
-        "balance": "Balance",
+        "availability": "Availability",
         "realSaving": "Real savingd",
         "deleteAlertMessage": "Deleting the budget book {{budgetBookDescription}}, all the related informations such as amounts and acategories will be lost.",
         "deleteButton": "Delete the budget book"
@@ -54,12 +57,11 @@
         "title": "Edit budget book"
     },
     "BUDGETBOOK_CREATE": {
-        "title": "Create Budget Book"
+        "title": "Create Budget Book",
+        "addCategoriesToUnlockRecurringAmounts": "Select categories to unlock the recurring amounts."
     },
     "BUDGETBOOK_DETAIL": {
         "date": "Date",
-        "planned": "Planned",
-        "actual": "Actual",
         "deleteAlertMessage": "Deleting the amount {{amountDescription}}, the information will be lost.",
         "deleteButton": "Delete the amount",
         "editAmountTitle": "Edit Amount",
@@ -86,5 +88,10 @@
         "deleteMacroCategoryAction": "Delete Macro Category",
         "editMacroCategoryAction": "Edit Macro Category",
         "deleteMacroCategoryMessage": "Are you sure you want to delete {{macroCategoryDescription}}."
+    },
+    "RECURRINGS": {
+        "addRecurringAmountTitle": "Add Recurring Amount",
+        "editRecurringAmountTitle": "Edit Recurring Amount",
+        "deleteRecurringAmountAlertMessage": "Are you sure you want to delete {{recurringAmountDescription}} recurring amount."
     }
 }

@@ -205,6 +205,52 @@ export class AmountsControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation addRecurringAmounts
+   */
+  static readonly AddRecurringAmountsPath = '/amounts/recurrings';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `addRecurringAmounts()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  addRecurringAmounts$Response(params: {
+    body: Array<AmountDto>
+  }): Observable<StrictHttpResponse<Array<AmountDto>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, AmountsControllerService.AddRecurringAmountsPath, 'post');
+    if (params) {
+      rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<AmountDto>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `addRecurringAmounts$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  addRecurringAmounts(params: {
+    body: Array<AmountDto>
+  }): Observable<Array<AmountDto>> {
+
+    return this.addRecurringAmounts$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<AmountDto>>) => r.body as Array<AmountDto>)
+    );
+  }
+
+  /**
    * Path part for operation getAmount
    */
   static readonly GetAmountPath = '/amounts/{id}';

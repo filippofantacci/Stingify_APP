@@ -7,7 +7,7 @@ import { AmountTypeDto, MacroCategoryDto, RecurringAmountDto } from 'src/app/cor
 import { AmountTypeControllerService, MacroCategoryControllerService, RecurringAmountsControllerService } from 'src/app/core/api/stingify/services';
 import { UserService } from 'src/app/core/services/user.service';
 import { AmountTypesEnum } from 'src/app/utils/app-constants';
-import { AddRecurringAmountModalComponent } from './add-recurring-amount-modal/add-recurring-amount-modal.component';
+import { CreateRecurringAmountModalComponent } from './create-recurring-amount-modal/create-recurring-amount-modal.component';
 import { EditRecurringAmountModalComponent } from './edit-recurring-amount-modal/edit-recurring-amount-modal.component';
 
 @Component({
@@ -56,82 +56,54 @@ export class RecurringsPage implements OnInit, OnDestroy {
     this.openAddAmountModal(AmountTypesEnum.Saving);
   }
 
-  // private getMacroCategoriesAndOpenAddModal(amountTyipeId: number): void {
-  //   this.presentLoadingWithOptions().then(spinner => {
-
-  //     this.subscriptions.push(
-  //       this.macroCategoryControllerService.getMacroCategoriesByUserId({ userId: this.userService.userId }).subscribe(
-  //         res => {
-  //           this.recurringAmounts = res;
-  //           this.openAddAmountModal(amountTyipeId);
-  //           this.changeDetectorRef.markForCheck();
-  //           spinner.dismiss();
-  //         },
-  //         err => {
-  //           this.changeDetectorRef.markForCheck();
-  //           spinner.dismiss();
-  //         }
-  //       )
-  //     );
-
-  //   })
-  //     .catch(reason => {
-  //       console.log(reason);
-  //     });
-  // }
-
-  // private getMacroCategoriesAndOpenEditModal(recurringAmount: RecurringAmountDto): void {
-  //   this.presentLoadingWithOptions().then(spinner => {
-
-  //     this.subscriptions.push(
-  //       this.macroCategoryControllerService.getMacroCategoriesByUserId({ userId: this.userService.userId }).subscribe(
-  //         res => {
-  //           this.recurringAmounts = res;
-  //           this.openEditAmountModal(recurringAmount);
-  //           this.changeDetectorRef.markForCheck();
-  //           spinner.dismiss();
-  //         },
-  //         err => {
-  //           this.changeDetectorRef.markForCheck();
-  //           spinner.dismiss();
-  //         }
-  //       )
-  //     );
-
-  //   })
-  //     .catch(reason => {
-  //       console.log(reason);
-  //     });
-  // }
-
   private openAddAmountModal(amountTyipeId: number): void {
-
-    const amountTypeDto: AmountTypeDto = {
-      amountTypeId: amountTyipeId,
-      description: AmountTypesEnum[amountTyipeId]
-    };
-    this.modalController.create({
-      component: AddRecurringAmountModalComponent,
-      canDismiss: true,
-      componentProps: {
-        amountType: amountTypeDto,
-        macroCategories: this.macroCategories,
-        amountTypes: this.amountTypes,
-      }
+    this.presentLoadingWithOptions().then(spinner => {
+      this.subscriptions.push(
+        this.macroCategoryControllerService.getMacroCategoriesByUserId({
+          userId: this.userService.userId
+        }).subscribe(
+          res => {
+            this.macroCategories = res;
+            spinner.dismiss();
+            this.changeDetectorRef.markForCheck();
+            const amountTypeDto: AmountTypeDto = {
+              amountTypeId: amountTyipeId,
+              description: AmountTypesEnum[amountTyipeId]
+            };
+            this.modalController.create({
+              component: CreateRecurringAmountModalComponent,
+              canDismiss: true,
+              componentProps: {
+                amountType: amountTypeDto,
+                macroCategories: this.macroCategories,
+                amountTypes: this.amountTypes,
+              }
+            })
+              .then(modal => {
+        
+                modal.present();
+                modal.onDidDismiss().then(res => {
+                  this.refreshAmounts();
+                })
+                  .catch(reason => {
+                    console.log(reason);
+                  })
+              })
+              .catch(reason => {
+                console.log(reason);
+              });
+          },
+          err => {
+            spinner.dismiss();
+            this.changeDetectorRef.markForCheck();
+          }
+        )
+      );
     })
-      .then(modal => {
+    .catch(reason => {
+      console.log(reason);
+    });
 
-        modal.present();
-        modal.onDidDismiss().then(res => {
-          this.refreshAmounts();
-        })
-          .catch(reason => {
-            console.log(reason);
-          })
-      })
-      .catch(reason => {
-        console.log(reason);
-      });
   }
 
   private openEditAmountModal(recurringAmount: RecurringAmountDto): void {
@@ -194,7 +166,7 @@ export class RecurringsPage implements OnInit, OnDestroy {
   private showAlertDeleteAmount(recurringAmount: RecurringAmountDto): void {
     this.alertController.create({
       header: this.translateService.instant('COMMON.alert'),
-      message: this.translateService.instant('RECURRING.deleteAlertMessage', { amountDescription: recurringAmount.description }),
+      message: this.translateService.instant('RECURRING.deleteRecurringAmountAlertMessage', { recurringAmountDescription: recurringAmount.description }),
       buttons: [
         {
           text: this.translateService.instant('COMMON.cancel'),

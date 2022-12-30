@@ -62,7 +62,7 @@ export class EditCategoryModalComponent implements OnInit, OnDestroy {
         ]).pipe(
           map(([macroCategories, amountTypes]) => {
 
-            this.macroCategories = macroCategories;
+            this.macroCategories = macroCategories.filter(macroCategory => macroCategory.cancellationTimestamp === null);
             this.macroCategories.push(NO_MACRO_CATEGORY)
             this.amountTypes = amountTypes;
             this.ready = true;

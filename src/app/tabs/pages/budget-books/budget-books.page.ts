@@ -96,7 +96,7 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
           role: 'cancel'
         },
         {
-          text: this.translateService.instant('COMMON.deleteButton'),
+          text: this.translateService.instant('BUDGETBOOKS.deleteButton'),
           handler: () => {
             this.deleteBudgetBook(budgetBook);
           }
@@ -149,12 +149,13 @@ export class BudgetBooksPage implements OnInit, OnDestroy {
     }
   }
 
-  public getBalance(budgetBook: BudgetBookDto): number {
-    return budgetBook.incomings - budgetBook.expenses - budgetBook.savings;
+  public getAvailability(budgetBook: BudgetBookDto): number {
+    return +(budgetBook.incomings - budgetBook.expenses - budgetBook.savings).toFixed(2);
   }
 
   public getRealSaving(budgetBook: BudgetBookDto): number {
-    return budgetBook.savings + budgetBook.incomings - budgetBook.expenses;
+    const computed = (budgetBook.incomings - budgetBook.expenses);
+    return computed > 0 ? +computed.toFixed(2) : 0;
   }
 
   ngOnDestroy() {

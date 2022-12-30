@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DomController, LoadingController, ModalController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { forkJoin, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AmountTypeDto, BudgetBookDto, CategoryDto, MacroCategoryDto } from 'src/app/core/api/stingify/models';
-import { BudgetBookControllerService, MacroCategoryControllerService } from 'src/app/core/api/stingify/services';
+import { AmountTypeDto, BudgetBookDto, CategoryDto, MacroCategoryDto, RecurringAmountDto } from 'src/app/core/api/stingify/models';
+import { BudgetBookControllerService, MacroCategoryControllerService, RecurringAmountsControllerService } from 'src/app/core/api/stingify/services';
 import { UserService } from 'src/app/core/services/user.service';
 import { getAmountTypeColor } from 'src/app/utils/style-utils';
 
@@ -27,10 +27,23 @@ export class BudgetBookCreatePage implements OnInit, OnDestroy {
   public categories: CategoryDto[] = [];
   public selectedCategories: CategoryDto[] = [];
 
+  public recurringAmounts: RecurringAmountDto[] = [];
+
+  get recurringAmountFormArray() {
+    return this.formAddBudgetBook.controls.recurringAmounts as FormArray;
+  }
+
+  get recurringAmountsEnabled() {
+    return this.recurringAmounts.filter(
+      recurringAmount => this.selectedCategories.filter(selectedCategory => selectedCategory.categoryId === recurringAmount.category.categoryId).length > 0)
+      ;
+  }
+
   constructor(
     private router: Router,
     private userService: UserService,
     private macroCategoryControllerService: MacroCategoryControllerService,
+    private recurringAmountsControllerService: RecurringAmountsControllerService,
     private budgetBookControllerService: BudgetBookControllerService,
     private changeDetectorRef: ChangeDetectorRef,
     private loadingController: LoadingController,
@@ -42,24 +55,31 @@ export class BudgetBookCreatePage implements OnInit, OnDestroy {
 
     this.formAddBudgetBook = this.fb.group({
       description: ['', [Validators.required, Validators.maxLength(255)]],
-      categories:[[]]
+      categories: [[]],
+      recurringAmounts: new FormArray([])
     });
 
-    this.initForm();
+
 
   }
-  
+
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-  
-  private initForm(): void {
 
+  private initForm(): void {
+    this.recurringAmounts.forEach(() => {
+      this.recurringAmountFormArray.push(new FormControl(false));
+    });
     this.changeDetectorRef.markForCheck();
   }
 
   public getColor(amountType: AmountTypeDto): string {
     return getAmountTypeColor(amountType);
+  }
+
+  public recurringAmountEnabled(recurringAmount: RecurringAmountDto): boolean {
+    return this.selectedCategories.filter(selectedCategory => selectedCategory.categoryId === recurringAmount.category.categoryId).length > 0;
   }
 
   public isSelected(category: CategoryDto): boolean {
@@ -79,10 +99,17 @@ export class BudgetBookCreatePage implements OnInit, OnDestroy {
     this.formAddBudgetBook.controls.categories.setValue(this.selectedCategories);
     this.changeDetectorRef.markForCheck();
   }
-  
+
   public removeFromSelected(categoryToRemove): void {
     this.selectedCategories = this.selectedCategories.filter(selectedCategory => selectedCategory.categoryId !== categoryToRemove.categoryId);
     this.formAddBudgetBook.controls.categories.setValue(this.selectedCategories);
+
+    this.recurringAmounts.forEach((recurringAmount, index) => {
+      if (this.formAddBudgetBook.controls.recurringAmounts.value[index] && !this.recurringAmountEnabled(recurringAmount)) {
+        this.recurringAmountFormArray.at(index).setValue(false);
+      }
+    })
+
     this.changeDetectorRef.markForCheck();
   }
 
@@ -92,11 +119,16 @@ export class BudgetBookCreatePage implements OnInit, OnDestroy {
 
       this.subscriptions.push(
         forkJoin([
-          this.macroCategoryControllerService.getMacroCategoriesByUserId({ userId: this.userService.userId })
+          this.macroCategoryControllerService.getMacroCategoriesByUserId({ userId: this.userService.userId }),
+          this.recurringAmountsControllerService.getRecurringAmountByUserId({ userId: this.userService.userId })
         ]).pipe(
-          map(([macroCategories]) => {
+          map(([macroCategories, recurringAmounts]) => {
 
             this.macroCategories = macroCategories.filter(macroCategory => macroCategory.categories.length > 0);
+            this.recurringAmounts = recurringAmounts;
+
+            this.initForm();
+
             this.ready = true;
             this.changeDetectorRef.markForCheck();
 
@@ -113,11 +145,20 @@ export class BudgetBookCreatePage implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
+    const selectedRecurringAmounts: Array<RecurringAmountDto> = new Array();
+    this.recurringAmounts.forEach((recurringAmount, index) => {
+      if (this.formAddBudgetBook.controls.recurringAmounts.value[index]
+        && this.recurringAmountEnabled(recurringAmount)) {
+        selectedRecurringAmounts.push(recurringAmount);
+      }
+    })
     const inputBudgetBook: BudgetBookDto = {
       creatorUserId: this.userService.userId,
       description: this.formAddBudgetBook.controls.description.value,
       categories: this.formAddBudgetBook.controls.categories.value,
+      recurringAmounts: selectedRecurringAmounts
     }
+
     this.presentLoadingWithOptions().then(spinner => {
 
       this.subscriptions.push(

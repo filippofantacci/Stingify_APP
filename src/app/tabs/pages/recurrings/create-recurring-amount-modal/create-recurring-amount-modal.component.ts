@@ -7,12 +7,12 @@ import { RecurringAmountsControllerService } from 'src/app/core/api/stingify/ser
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
-  selector: 'app-add-recurring-amount-modal',
-  templateUrl: './add-recurring-amount-modal.component.html',
-  styleUrls: ['./add-recurring-amount-modal.component.scss'],
+  selector: 'app-create-recurring-amount-modal',
+  templateUrl: './create-recurring-amount-modal.component.html',
+  styleUrls: ['./create-recurring-amount-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddRecurringAmountModalComponent implements OnInit, OnDestroy {
+export class CreateRecurringAmountModalComponent implements OnInit, OnDestroy {
 
   private subscriptions: Array<Subscription> = new Array<Subscription>();
 
@@ -29,7 +29,7 @@ export class AddRecurringAmountModalComponent implements OnInit, OnDestroy {
 
   public ready: boolean = false;
 
-  public formAddAmount: FormGroup;
+  public formCreateAmount: FormGroup;
 
   constructor(
     private userService: UserService,
@@ -43,7 +43,7 @@ export class AddRecurringAmountModalComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     
-    this.formAddAmount = this.fb.group({
+    this.formCreateAmount = this.fb.group({
       amountType: [this.amountType.amountTypeId, [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(255)]],
       category: [''],
@@ -64,13 +64,13 @@ export class AddRecurringAmountModalComponent implements OnInit, OnDestroy {
 
    this.filterMacroCategoriesOption();
 
-    this.formAddAmount.controls.category.disable();
+    this.formCreateAmount.controls.category.disable();
     this.changeDetectorRef.markForCheck();
   }
 
   private filterMacroCategoriesOption(): void {
     this.macroCategoriesOptions = this.macroCategories.filter(macroCategory => 
-      macroCategory.categories.filter(category => category.amountType.amountTypeId === this.formAddAmount.controls.amountType.value).length > 0
+      macroCategory.categories.filter(category => category.amountType.amountTypeId === this.formCreateAmount.controls.amountType.value).length > 0
     );
     if(this.macroCategoriesOptions.length > 0) {
       this.macroCategeoryFormControl.enable();
@@ -80,11 +80,11 @@ export class AddRecurringAmountModalComponent implements OnInit, OnDestroy {
   }
 
   private filterCategories() : void {
-    this.categories = this.categories.filter(category => category.amountType.amountTypeId === this.formAddAmount.controls.amountType.value);
+    this.categories = this.categories.filter(category => category.amountType.amountTypeId === this.formCreateAmount.controls.amountType.value);
     if(this.categories.length > 0) {
-      this.formAddAmount.controls.category.enable();
+      this.formCreateAmount.controls.category.enable();
     } else {
-      this.formAddAmount.controls.category.disable();
+      this.formCreateAmount.controls.category.disable();
     }
   }
 
@@ -99,9 +99,9 @@ export class AddRecurringAmountModalComponent implements OnInit, OnDestroy {
     this.categories = this.macroCategeoryFormControl.value?.categories;
     this.filterCategories();
     if (this.categories.length > 0) {
-      this.formAddAmount.controls.category.enable();
+      this.formCreateAmount.controls.category.enable();
     } else {
-      this.formAddAmount.controls.category.disable();
+      this.formCreateAmount.controls.category.disable();
     }
     this.changeDetectorRef.markForCheck();
   }
@@ -109,11 +109,11 @@ export class AddRecurringAmountModalComponent implements OnInit, OnDestroy {
   public onSubmit(): void {
     const inputAmount: RecurringAmountDto = {
       creatorUserId: this.userService.userId,
-      amountType: { amountTypeId: this.formAddAmount.controls.amountType.value },
-      description: this.formAddAmount.controls.description.value,
-      category: { categoryId: this.formAddAmount.controls.category.value },
-      planned: this.formAddAmount.controls.planned.value,
-      actual: this.formAddAmount.controls.actual.value,
+      amountType: { amountTypeId: this.formCreateAmount.controls.amountType.value },
+      description: this.formCreateAmount.controls.description.value,
+      category: { categoryId: this.formCreateAmount.controls.category.value },
+      planned: this.formCreateAmount.controls.planned.value,
+      actual: this.formCreateAmount.controls.actual.value,
     }
     this.presentLoadingWithOptions().then(spinner => {
 
