@@ -41,7 +41,7 @@
       <!-- description -->
       <ion-item>
         <ion-label>{{ 'LABELS.description' | translate }}: </ion-label>
-        <ion-input formControlName="description" class="ion-text-right"></ion-input>
+        <ion-input formControlName="description" class="ion-text-right" [clearInput]="true"></ion-input>
       </ion-item>
 
       <!-- date -->
@@ -64,13 +64,13 @@
       <!-- planned -->
       <ion-item>
         <ion-label>{{ 'LABELS.planned' | translate }}:</ion-label>
-        <ion-input formControlName="planned" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
+        <ion-input formControlName="planned" type="number" class="ion-text-right" [clearInput]="true"> &euro; &nbsp;</ion-input>
       </ion-item>
 
       <!-- actual -->
       <ion-item>
         <ion-label>{{ 'LABELS.actual' | translate }}:</ion-label>
-        <ion-input formControlName="actual" type="number" class="ion-text-right"> &euro; &nbsp;</ion-input>
+        <ion-input formControlName="actual" type="number" class="ion-text-right" [clearInput]="true"> &euro; &nbsp;</ion-input>
       </ion-item>
 
     </ion-list>
