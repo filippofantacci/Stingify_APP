@@ -1,7 +1,11 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-title>{{amount.description}}</ion-card-title>
-    <ion-label>{{amount?.category?.description}} - {{amount?.category?.macroCategory?.description}}</ion-label>
+    <ion-card-title>
+      {{amount?.category?.macroCategory?.description}} / {{amount?.category?.description}}
+    </ion-card-title>
+    <ion-label>
+      {{amount.description}}
+    </ion-label>
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
@@ -33,7 +37,7 @@
       </ion-row>
     </ion-grid>
   </ion-card-content>
-  <ion-footer>
+  <ion-footer (click)="showActions(amount)">
     <ion-grid>
       <ion-row class="ion-justify-content-between">
         <ion-col size="auto" class="ion-text-center">
